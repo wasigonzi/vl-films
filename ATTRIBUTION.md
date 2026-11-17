@@ -154,10 +154,10 @@ project licence.
 | `assets/brand/visualab-splash-logo.png` | Visualab Studios | Original work: Visualab Studios logo for the loading screen | MIT OR Apache-2.0 |
 | `assets/app-icon/visualab-mark.png` | Visualab Studios | Original work: Visualab Studios wordmark | MIT OR Apache-2.0 |
 | `apps/filmcraft-web/web/favicon.svg` | Visualab Studios | Original work: Visualab Studios favicon | MIT OR Apache-2.0 |
-| `apps/filmcraft-web/web/pwa/icon-180.png` | Visualab Studios | Original work: home-screen icon 180 px | MIT OR Apache-2.0 |
-| `apps/filmcraft-web/web/pwa/icon-192.png` | Visualab Studios | Original work: home-screen icon 192 px | MIT OR Apache-2.0 |
-| `apps/filmcraft-web/web/pwa/icon-512.png` | Visualab Studios | Original work: home-screen icon 512 px | MIT OR Apache-2.0 |
-| `apps/filmcraft-web/web/pwa/vl-logo.png` | Visualab Studios | Original work: Visualab Studios logo for the web loading screen | MIT OR Apache-2.0 |
+| `apps/filmcraft-web/web/icon-180.png` | Visualab Studios | Original work: home-screen icon 180 px | MIT OR Apache-2.0 |
+| `apps/filmcraft-web/web/icon-192.png` | Visualab Studios | Original work: home-screen icon 192 px | MIT OR Apache-2.0 |
+| `apps/filmcraft-web/web/icon-512.png` | Visualab Studios | Original work: home-screen icon 512 px | MIT OR Apache-2.0 |
+| `apps/filmcraft-web/web/vl-logo.png` | Visualab Studios | Original work: Visualab Studios logo for the web loading screen | MIT OR Apache-2.0 |
 
 ## Third-party source code
 

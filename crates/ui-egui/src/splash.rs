@@ -39,9 +39,14 @@ pub(crate) fn texture(ctx: &egui::Context, name: &'static str, png: &[u8]) -> eg
     t
 }
 
-/// Paint the splash over everything. Returns true while it covers the app.
+/// Turn the splash on for this context (the desktop and web hosts do; headless tests don't).
+pub fn enable(ctx: &egui::Context) {
+    ctx.data_mut(|d| d.insert_temp(Id::unique("vl-splash-on"), true));
+}
+
+/// Paint the splash over everything once [`enable`]d. Returns true while it covers the app.
 pub fn paint(ctx: &egui::Context) -> bool {
-    if std::env::var_os("VL_NO_SPLASH").is_some() {
+    if !ctx.data(|d| d.get_temp::<bool>(Id::unique("vl-splash-on"))).unwrap_or(false) || std::env::var_os("VL_NO_SPLASH").is_some() {
         return false;
     }
     let start_id = Id::unique("vl-splash-start");

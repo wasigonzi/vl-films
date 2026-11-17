@@ -308,6 +308,9 @@ fn app_creator(launch: Launch, graphics: graphics::GraphicsStart, created: Arc<A
     let Launch { control_port, control_input_only, files, demo, startup_flag, recover, data_dir, graphics: _ } = launch;
     Box::new(move |cc| {
         filmcraft_ui_egui::install_ime_reset_callbacks(&cc.egui_ctx);
+        if control_port.is_none() {
+            filmcraft_ui_egui::splash::enable(&cc.egui_ctx);
+        }
         created.store(true, Ordering::Relaxed);
         // Start the control server before anything touches recovery state: `file.recover`
         // consumes its candidate, and an input-only session that must abort (no server) may not

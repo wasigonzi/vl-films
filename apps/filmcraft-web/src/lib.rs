@@ -182,6 +182,9 @@ pub async fn start(canvas_id: String) -> Result<(), JsValue> {
             web_options,
             Box::new(move |cc| {
                 filmcraft_ui_egui::install_ime_reset_callbacks(&cc.egui_ctx);
+                if !query_flag("nosplash") && !in_host_mode {
+                    filmcraft_ui_egui::splash::enable(&cc.egui_ctx);
+                }
                 set_context(cc.egui_ctx.clone());
                 let ctx = cc.egui_ctx.clone();
                 fs::set_on_data(move || ctx.request_repaint());
