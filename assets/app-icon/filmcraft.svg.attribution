@@ -1,8 +1,8 @@
 asset:        filmcraft.svg
-title:        FilmCraft app icon, canonical vector (owl with ear tufts)
-author:       Brandon Thomas (FilmCraft owner), for the FilmCraft project
-source:       original work (drawn by the owner in ArtCraft, then vectorised)
+title:        VL Films app icon (Visualab Studios brand mark), canonical vector
+author:       Visualab Studios
+source:       original work (Visualab Studios brand mark)
 license:      MIT OR Apache-2.0
 license-file: assets/app-icon/LICENSE.txt
-added:        2026-10-02 by Claude (agent) for Brandon Thomas
-notes:        SVG traced at 2048 px from the owner's ArtCraft drawing. Three colours: ink #0b0b0c, paper #efe9dc, app colour #8b5cf6; 512 viewBox, rx=112. See assets/app-icon/README.md.
+added:        2026-11-16 by Visualab Studios
+notes:        Visualab Studios brand mark, same artwork as VL Studios and VL Vector.

@@ -9,10 +9,10 @@
 
 
 <p align="center">
-  <img src="assets/app-icon/hicolor/256x256/apps/ai.storyteller.filmcraft.png" width="128" height="128" alt="FilmCraft icon: an engraved owl on a purple tile">
+  <img src="assets/app-icon/hicolor/256x256/apps/ai.storyteller.filmcraft.png" width="128" height="128" alt="VL Films icon: an engraved owl on a purple tile">
 </p>
 
-<h1 align="center">FilmCraft</h1>
+<h1 align="center">VL Films</h1>
 
 <p align="center">
   <b>Video editing, color and sound; an open-source, professional non-linear video editor, built in pure Rust.</b>
@@ -38,7 +38,7 @@
 </p>
 
 <p align="center">
-  <a href="https://getartcraft.com/apps/filmcraft"><b>FilmCraft on getartcraft.com</b></a> ·
+  <a href="https://getartcraft.com/apps/filmcraft"><b>VL Films on getartcraft.com</b></a> ·
   <a href="https://getartcraft.com/">ArtCraft</a> ·
   <a href="https://getartcraft.com/apps">All Crafting Apps</a>
 </p>
@@ -46,10 +46,10 @@
 <br>
 
 <p align="center">
-  <img src="docs/images/filmcraft-hero.png" alt="FilmCraft in the Color workspace, mid-way through an Apollo 11 documentary cut from NASA footage: the Program monitor on the Saturn V clearing the launch tower with a Launch Complex 39A lower third and an air-to-ground subtitle, Effect Controls with color grading and Scale keyframes on the shot, the color grading panel, bins of NASA selects, and a timeline with 49 picture cuts, B-roll, titles, a caption track, mission audio, a ducked music bed, named markers, a rendered section and live loudness meters" width="100%">
+  <img src="docs/images/filmcraft-hero.png" alt="VL Films in the Color workspace, mid-way through an Apollo 11 documentary cut from NASA footage: the Program monitor on the Saturn V clearing the launch tower with a Launch Complex 39A lower third and an air-to-ground subtitle, Effect Controls with color grading and Scale keyframes on the shot, the color grading panel, bins of NASA selects, and a timeline with 49 picture cuts, B-roll, titles, a caption track, mission audio, a ducked music bed, named markers, a rendered section and live loudness meters" width="100%">
 </p>
 
-<p align="center"><sub><i>Apollo 11 - Tranquility</i>: a three-minute documentary edit of NASA's 1969 launch, landing and moonwalk film, with subtitles from the mission transcript. Every frame in these screenshots comes from public-domain footage, decoded, composited and graded by FilmCraft's own code.</sub></p>
+<p align="center"><sub><i>Apollo 11 - Tranquility</i>: a three-minute documentary edit of NASA's 1969 launch, landing and moonwalk film, with subtitles from the mission transcript. Every frame in these screenshots comes from public-domain footage, decoded, composited and graded by VL Films' own code.</sub></p>
 
 > [!NOTE]
 > **ArtCraft is a community of artists from all walks of life.** Digital, generative, music,
@@ -73,7 +73,7 @@
 
 <br>
 
-FilmCraft is a professional non-linear editor: familiar panels, workspaces, tools and shortcuts, so your hands already know where everything is. Underneath, it is new from the bitstream up. The H.264, HEVC, ProRes and AAC codecs are our own, written in Rust from the public specifications. A GPU compositor works in linear light. Frame math runs on exact integer time, so edits never drift. And every action in the app is a command that an AI agent can drive as precisely as you can.
+VL Films is a professional non-linear editor: familiar panels, workspaces, tools and shortcuts, so your hands already know where everything is. Underneath, it is new from the bitstream up. The H.264, HEVC, ProRes and AAC codecs are our own, written in Rust from the public specifications. A GPU compositor works in linear light. Frame math runs on exact integer time, so edits never drift. And every action in the app is a command that an AI agent can drive as precisely as you can.
 
 <br>
 
@@ -91,7 +91,7 @@ FilmCraft is a professional non-linear editor: familiar panels, workspaces, tool
 - **Every trim.** Ripple, roll, slip, slide, rate stretch and razor tools. Trim mode selects edit points as ripple, roll or trim, nudges them a frame at a time (`⌥←` `⌥→`, ×5 with `⇧`), toggles the trim type with `⌃T` and extends them to the playhead with `E`. `Q` and `W` ripple-trim to the playhead. The **Trim Monitor** shows both sides of the edit, and **dynamic trimming** trims live while it plays: `L` forward, `J` back, `K` to stop and commit as one undo step.
 - **Exact time.** Every edit is computed on integer ticks: 254,016,000,000 per second, which divides evenly by every common frame rate and sample rate. 23.976, 29.97 drop-frame and 59.94 are exact, not approximate.
 - **The details pros rely on.** Markers with colours, names and durations; export sequence review notes with **Markers ▸ Export Markers as CSV…**; add edit (`⌘K`) on one or all tracks; nesting; copy, paste and paste insert; ripple delete and close gap; snapping; unlimited undo with a History panel.
-- **Your keys.** A Keyboard Shortcuts editor (`⌥⌘K`) with a drawn keyboard, panel-specific shortcuts, conflict warnings and presets for FilmCraft and standard NLE key layouts.
+- **Your keys.** A Keyboard Shortcuts editor (`⌥⌘K`) with a drawn keyboard, panel-specific shortcuts, conflict warnings and presets for VL Films and standard NLE key layouts.
 - **Never lose work.** Saves are atomic, auto-save keeps a rolling set of versions, and a crash-recovery journal written about a second after each edit brings back unsaved changes after a crash or power cut.
 
 <p align="center">
@@ -215,11 +215,11 @@ Also imported: MPEG-2 / MPEG-1 video, AC-3, MP2, MXF (OP1a / OP-Atom), MPEG tran
 
 ## Interchange
 
-Move timelines between FilmCraft and every other editor:
+Move timelines between VL Films and every other editor:
 
 - **FCP 7 XML (xmeml):** industry-standard timeline interchange format. It carries nested sequences, transitions, generators, Motion, Opacity, Time Remap and audio levels, with keyframes.
 - **FCPXML 1.9–1.11:** the spine, connected clips as lanes, transitions, retiming and compound clips.
-- **OpenTimelineIO:** the open interchange format of the film industry, round-tripping every FilmCraft detail through `metadata.filmcraft`.
+- **OpenTimelineIO:** the open interchange format of the film industry, round-tripping every VL Films detail through `metadata.filmcraft`.
 - **CMX 3600 EDL:** the oldest format still in use, with drop-frame timecode, dissolves, wipes, speed changes (`M2`) and one EDL per track.
 - **AAF (Edit Protocol):** standard timeline and audio interchange format. Video and audio tracks, dissolves and dips, clip volume with keyframes, markers and source timecode; audio embedded or as separate WAV / AIFF files, trimmed with handles, with clip effects rendered in and broken out to mono, plus an optional video mixdown. Import reads AAF back, extracting embedded audio.
 - **OMF 2.0:** the audio-post handoff: the audio tracks with crossfades and gain, sample-accurate, with the audio encapsulated or alongside.
@@ -230,7 +230,7 @@ Import merges the document's bins, media and sequences into your project as one 
 
 ## Built for agents
 
-Every menu item, button, slider and drag in FilmCraft is a **command** with an id, typed parameters and an enabled state. There are more than 650 engine commands (`filmcraft-cli commands` lists them), with more commands continuously added. The UI, the CLI, a JSON control channel and an **MCP server** all dispatch the same commands, so Claude or any agent can cut, trim, grade, mix and export exactly the way a person does. The UI can also be driven at the level of mouse and keyboard: every widget has an automation id, and agents can click, drag, type and take screenshots.
+Every menu item, button, slider and drag in VL Films is a **command** with an id, typed parameters and an enabled state. There are more than 650 engine commands (`filmcraft-cli commands` lists them), with more commands continuously added. The UI, the CLI, a JSON control channel and an **MCP server** all dispatch the same commands, so Claude or any agent can cut, trim, grade, mix and export exactly the way a person does. The UI can also be driven at the level of mouse and keyboard: every widget has an automation id, and agents can click, drag, type and take screenshots.
 
 ```jsonc
 // over the control channel (JSON lines on TCP) or as MCP tool calls
@@ -255,7 +255,7 @@ The trailer and the grades in these screenshots were built exactly this way, by 
 
 ## Get started
 
-New to editing in FilmCraft? Follow [Getting started: video fades and audio volume keyframes](docs/getting-started-fades.md).
+New to editing in VL Films? Follow [Getting started: video fades and audio volume keyframes](docs/getting-started-fades.md).
 
 ```sh
 cargo run --release -p filmcraft                           # the desktop app, with a demo project
@@ -264,7 +264,7 @@ cargo run --release -p filmcraft-cli -- commands           # list every engine c
 cargo run --release -p filmcraft-cli -- mcp                # MCP server (headless)
 ```
 
-Japanese text in the interface and in titles comes from [craft-fonts](https://github.com/storytold/craft-fonts), an optional build input (release builds always include it; without it FilmCraft uses its own and the system's fonts):
+Japanese text in the interface and in titles comes from [craft-fonts](https://github.com/storytold/craft-fonts), an optional build input (release builds always include it; without it VL Films uses its own and the system's fonts):
 
 ```sh
 git clone https://github.com/storytold/craft-fonts ../craft-fonts
@@ -281,7 +281,7 @@ The control protocol is documented in [docs/control-protocol.md](docs/control-pr
 | [AGENTS.md](AGENTS.md) | The rules every contributor must follow: assets, clean room, licences |
 | [docs/architecture.md](docs/architecture.md) | Layers, data model, time base, command system, render and export pipeline |
 | [docs/testing.md](docs/testing.md) | Unit, property and ffmpeg-oracle tests, accuracy criteria, benchmarks |
-| [docs/agents.md](docs/agents.md) | Driving FilmCraft over MCP and the control channel; how agents develop it |
+| [docs/agents.md](docs/agents.md) | Driving VL Films over MCP and the control channel; how agents develop it |
 | [docs/control-protocol.md](docs/control-protocol.md) | Control-channel and MCP reference |
 | [docs/project-files.md](docs/project-files.md) | `.fcproj` format, schema migrations, auto-save and crash recovery |
 | [docs/graphics.md](docs/graphics.md) · [docs/captions.md](docs/captions.md) | Text engine, graphic clips and tools; caption tracks and formats |
@@ -291,12 +291,12 @@ The control protocol is documented in [docs/control-protocol.md](docs/control-pr
 
 ## Status
 
-FilmCraft is young and moving fast. Editing, trimming, multicam, colour, keyframes, effects, titles, captions, mixing, codecs and export work today.
+VL Films is young and moving fast. Editing, trimming, multicam, colour, keyframes, effects, titles, captions, mixing, codecs and export work today.
 
-FilmCraft is in **alpha**. We track two numbers ([docs/target-app-parity.md](docs/target-app-parity.md), re-measured 2026-10-10):
+VL Films is in **alpha**. We track two numbers ([docs/target-app-parity.md](docs/target-app-parity.md), re-measured 2026-10-10):
 
-- **Feature breadth: ~86%.** Professional NLE menu items, effects, transitions, panels and formats that exist in FilmCraft (menus 92% and effects 100% measured).
-- **Ready for real work: ~56%.** Our honest estimate of how close FilmCraft is to handling full production work on real projects.
+- **Feature breadth: ~86%.** Professional NLE menu items, effects, transitions, panels and formats that exist in VL Films (menus 92% and effects 100% measured).
+- **Ready for real work: ~56%.** Our honest estimate of how close VL Films is to handling full production work on real projects.
 
 The biggest gaps today:
 
@@ -327,7 +327,7 @@ Nothing below the front ends depends on a UI toolkit or OS API. `cargo xtask ci`
 
 ## Downloads
 
-**New to FilmCraft?** Download it from the [FilmCraft page on getartcraft.com](https://getartcraft.com/apps/filmcraft). That's the easiest way to install it.
+**New to VL Films?** Download it from the [VL Films page on getartcraft.com](https://getartcraft.com/apps/filmcraft). That's the easiest way to install it.
 
 **Want a specific build or format?** On GitHub, the [latest release](https://github.com/storytold/filmcraft/releases/latest) has every build listed below, and [all releases](https://github.com/storytold/filmcraft/releases) has earlier versions and their notes. `<ver>` in the file names is the version number, and `SHA256SUMS.txt` lists a checksum for every file.
 
@@ -359,8 +359,8 @@ and web backend defaults are unchanged.
 A PC whose GPUs were installed from different driver packages of one vendor (a laptop with an
 integrated and a discrete AMD GPU, for example) can list one GPU twice, once through each installed
 version of the Vulkan driver, and a window drawn through the stale one crashes inside the driver
-(`amdvlk64.dll`, exit code `0xc0000005`). FilmCraft draws with the newer one and says so in
-`%APPDATA%\FilmCraft\Logs\filmcraft.log`; installing one driver package for every GPU removes the
+(`amdvlk64.dll`, exit code `0xc0000005`). VL Films draws with the newer one and says so in
+`%APPDATA%\VL Films\Logs\filmcraft.log`; installing one driver package for every GPU removes the
 duplicate. With one driver per GPU the adapter is the one wgpu picks, as before.
 
 ### macOS
@@ -383,13 +383,13 @@ duplicate. With one driver per GPU the adapter is the one wgpu picks, as before.
 RISC-V (riscv64): `filmcraft-<ver>-linux-riscv64.tar.gz` (tarball only; needs glibc 2.39+, e.g. Ubuntu 24.04
 or Debian 13).
 
-The tarball installer places FilmCraft, its command-line tool and desktop integration in
+The tarball installer places VL Films, its command-line tool and desktop integration in
 `~/.local`, without administrator permissions. For all users, run
 `sudo ./install.sh --prefix /usr/local` instead. Running the installer again updates the installation.
 
 **Gentoo (community-maintained):** the [::snakebyte overlay](https://github.com/switch87/snakebyte-overlay)
 packages the Linux release as `media-video/filmcraft-bin`. It is maintained by the community, not by the
-FilmCraft team, so report packaging problems to the overlay:
+VL Films team, so report packaging problems to the overlay:
 
 ```sh
 eselect repository add snakebyte git https://github.com/switch87/snakebyte-overlay.git
@@ -412,7 +412,7 @@ emerge --ask media-video/filmcraft-bin
 
 ## The Crafting Apps
 
-FilmCraft is one of the **Crafting Apps**: free, open-source creative tools from the
+VL Films is one of the **Crafting Apps**: free, open-source creative tools from the
 [ArtCraft](https://getartcraft.com/) team, each written from scratch in Rust and each able to
 stand on its own.
 
@@ -420,7 +420,7 @@ stand on its own.
 |:-:|---|---|---|---|
 | <img src="https://raw.githubusercontent.com/storytold/photocraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.photocraft.png" alt="" width="32" height="32"> | **PhotoCraft** | Image editing: layers, masks, type and real PSD files | [GitHub](https://github.com/storytold/photocraft) | [Website](https://getartcraft.com/apps/photocraft) |
 | <img src="https://raw.githubusercontent.com/storytold/vectorcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.vectorcraft.png" alt="" width="32" height="32"> | **VectorCraft** | Vector illustration | [GitHub](https://github.com/storytold/vectorcraft) | [Website](https://getartcraft.com/apps/vectorcraft) |
-| <img src="https://raw.githubusercontent.com/storytold/filmcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.filmcraft.png" alt="" width="32" height="32"> | **FilmCraft** | Video editing, color and sound | [GitHub](https://github.com/storytold/filmcraft) | [Website](https://getartcraft.com/apps/filmcraft) |
+| <img src="https://raw.githubusercontent.com/storytold/filmcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.filmcraft.png" alt="" width="32" height="32"> | **VL Films** | Video editing, color and sound | [GitHub](https://github.com/storytold/filmcraft) | [Website](https://getartcraft.com/apps/filmcraft) |
 | <img src="https://raw.githubusercontent.com/storytold/lightcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.lightcraft.png" alt="" width="32" height="32"> | **LightCraft** | Photo library and raw development | [GitHub](https://github.com/storytold/lightcraft) | [Website](https://getartcraft.com/apps/lightcraft) |
 | <img src="https://raw.githubusercontent.com/storytold/pdfcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.pdfcraft.png" alt="" width="32" height="32"> | **PdfCraft** | Reading, organizing and protecting PDFs | [GitHub](https://github.com/storytold/pdfcraft) | [Website](https://getartcraft.com/apps/pdfcraft) |
 | <img src="https://raw.githubusercontent.com/storytold/effectcraft/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.effectcraft.png" alt="" width="32" height="32"> | **EffectCraft** | Motion graphics and visual effects | [GitHub](https://github.com/storytold/effectcraft) | [Website](https://getartcraft.com/apps/effectcraft) |
@@ -456,15 +456,15 @@ And [**ArtCraft**](https://getartcraft.com/) itself, our AI image and video stud
   <a href="https://discord.gg/artcraft"><b>discord.gg/artcraft</b></a> ·
   <a href="https://getartcraft.com/">getartcraft.com</a> ·
   <a href="https://getartcraft.com/apps">The Crafting Apps</a> ·
-  <a href="https://getartcraft.com/apps/filmcraft">FilmCraft</a>
+  <a href="https://getartcraft.com/apps/filmcraft">VL Films</a>
 </p>
 
 <br>
 
 ## License and credits
 
-FilmCraft is dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
-Copyright (c) 2026 ArtCraft Team and the FilmCraft contributors. Required notices are in [NOTICE](NOTICE).
+VL Films is dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
+Copyright (c) 2026 ArtCraft Team and the VL Films contributors. Required notices are in [NOTICE](NOTICE).
 
 Bundled fonts, icons, images and other assets keep their own open licenses; each one is listed
 with its author, source and license in [ATTRIBUTION.md](ATTRIBUTION.md). Builds made with
@@ -473,11 +473,11 @@ with its author, source and license in [ATTRIBUTION.md](ATTRIBUTION.md). Builds 
 
 **Footage and music in the screenshots:** NASA's Apollo 11 film and television footage from [images.nasa.gov](https://images.nasa.gov) (launch, Launch Control Center, lunar surface and recovery) and the Apollo 11 air-to-ground voice transcript, all US Government works in the public domain (NASA does not endorse this project); *Night of the Living Dead* (1968), *Carnival of Souls* (1962) and *Charade* (1963), all in the US public domain; *Earth Views from the ISS* by NASA; Chopin's Nocturne Op. 48 No. 1 and Ballade No. 1, performed for Musopen and released under CC0. The media itself is not in this repository. Sources and details for every asset are in [ATTRIBUTION.md](ATTRIBUTION.md).
 
-FilmCraft is an independent implementation. It contains no proprietary code, icons, images, presets or LUTs, and no GPL or LGPL code; every icon is drawn in code and every asset is openly licensed and attributed ([AGENTS.md](AGENTS.md)), apart from the ArtCraft name and logos, which are trademarks of the ArtCraft Team used under [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt). ffmpeg is used only as an external test oracle.
+VL Films is an independent implementation. It contains no proprietary code, icons, images, presets or LUTs, and no GPL or LGPL code; every icon is drawn in code and every asset is openly licensed and attributed ([AGENTS.md](AGENTS.md)), apart from the ArtCraft name and logos, which are trademarks of the ArtCraft Team used under [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt). ffmpeg is used only as an external test oracle.
 
 The ArtCraft name, wordmark and logos in [`docs/brand/`](docs/brand/) are trademarks of the
 ArtCraft Team and are not covered by this license. They may be used only unmodified, and only as
-part of this repository and FilmCraft, under [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt).
+part of this repository and VL Films, under [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt).
 Forks and modified versions must remove them.
 
 <br>

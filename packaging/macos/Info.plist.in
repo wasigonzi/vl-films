@@ -24,11 +24,11 @@
     <string>zh-Hans</string>
   </array>
   <key>CFBundleDisplayName</key>
-  <string>FilmCraft</string>
+  <string>VL Films</string>
   <key>CFBundleName</key>
-  <string>FilmCraft</string>
+  <string>VL Films</string>
   <key>CFBundleExecutable</key>
-  <string>FilmCraft</string>
+  <string>VL Films</string>
   <key>CFBundleIdentifier</key>
   <string>ai.storyteller.filmcraft</string>
   <key>CFBundleInfoDictionaryVersion</key>
@@ -41,12 +41,12 @@
   <string>@SHORT_VERSION@</string>
   <key>CFBundleVersion</key>
   <string>@SHORT_VERSION@</string>
-  <key>FilmCraftVersion</key>
+  <key>VL FilmsVersion</key>
   <string>@VERSION@</string>
-  <key>FilmCraftBuildCommit</key>
+  <key>VL FilmsBuildCommit</key>
   <string>@BUILD_SHA@</string>
   <key>CFBundleIconFile</key>
-  <string>FilmCraft</string>
+  <string>VL Films</string>
   <key>LSApplicationCategoryType</key>
   <string>public.app-category.video</string>
   <!-- Must match MACOSX_DEPLOYMENT_TARGET in package.sh. Big Sur is the first release on
@@ -62,17 +62,17 @@
   <!-- Voice-over recording (timeline track header ▸ Voice-over Record) reads the microphone.
        Without this string macOS never asks and the app gets no input. -->
   <key>NSMicrophoneUsageDescription</key>
-  <string>FilmCraft uses the microphone to record voice-over onto the timeline.</string>
+  <string>VL Films uses the microphone to record voice-over onto the timeline.</string>
   <key>NSHumanReadableCopyright</key>
-  <string>Copyright © the FilmCraft authors. MIT OR Apache-2.0.</string>
+  <string>Copyright © the VL Films authors. MIT OR Apache-2.0.</string>
 
   <!-- Finder opens a project by this claim. The exported type alone is not enough:
-       without it Launch Services reports that FilmCraft cannot open a FilmCraft Project (#1229). -->
+       without it Launch Services reports that VL Films cannot open a VL Films Project (#1229). -->
   <key>CFBundleDocumentTypes</key>
   <array>
     <dict>
       <key>CFBundleTypeName</key>
-      <string>FilmCraft Project</string>
+      <string>VL Films Project</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
@@ -91,14 +91,14 @@
       <key>UTTypeIdentifier</key>
       <string>ai.storyteller.filmcraft.project</string>
       <key>UTTypeDescription</key>
-      <string>FilmCraft Project</string>
+      <string>VL Films Project</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
         <string>public.json</string>
       </array>
       <key>UTTypeIconFile</key>
-      <string>FilmCraft</string>
+      <string>VL Films</string>
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.filename-extension</key>

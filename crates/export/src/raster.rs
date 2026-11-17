@@ -37,7 +37,7 @@ pub(crate) fn tga(rgba: &[u8], w: u32, h: u32, alpha: bool) -> Result<Vec<u8>> {
 
 /// A 10-bit RGB DPX file.
 pub(crate) fn dpx(rgba: &[u8], w: u32, h: u32) -> Result<Vec<u8>> {
-    craft_dpx::rgba8_dpx10::encode_rgba8_dpx10(rgba, w, h, "FilmCraft").map_err(|e| match e {
+    craft_dpx::rgba8_dpx10::encode_rgba8_dpx10(rgba, w, h, "VL Films").map_err(|e| match e {
         craft_dpx::rgba8_dpx10::Rgba8EncodeError::FrameSize => ExportError::Encode("frame size".into()),
         craft_dpx::rgba8_dpx10::Rgba8EncodeError::TooLarge => ExportError::Unsupported(format!("a {w}×{h} DPX frame exceeds 4 GB")),
         craft_dpx::rgba8_dpx10::Rgba8EncodeError::OutOfMemory => ExportError::Encode(format!("out of memory for a {w}×{h} DPX frame")),
@@ -47,7 +47,7 @@ pub(crate) fn dpx(rgba: &[u8], w: u32, h: u32) -> Result<Vec<u8>> {
 #[cfg(test)]
 use craft_exr::rgba8::{half, rle};
 
-/// Write a scanline OpenEXR using FilmCraft's color conversion table.
+/// Write a scanline OpenEXR using VL Films' color conversion table.
 pub(crate) fn exr(rgba: &[u8], w: u32, h: u32, alpha: bool, compression: ExrCompression) -> Result<Vec<u8>> {
     let compression = match compression {
         ExrCompression::None => craft_exr::rgba8::Compression::None,

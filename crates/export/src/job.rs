@@ -216,7 +216,7 @@ fn make_venc(settings: &ExportSettings, w: u32, h: u32, rate: FrameRate) -> Resu
     pick_encoder(&video_factories().read().unwrap_or_else(|e| e.into_inner()).clone(), settings.video_format(), w, h, rate, settings)
 }
 
-/// What the report says when FilmCraft's own encoder runs where a hardware one was asked for (H.264
+/// What the report says when VL Films' own encoder runs where a hardware one was asked for (H.264
 /// with Hardware encoding Auto) or declined the export (`declined`: which one and why). `None` when
 /// a hardware encoder runs, or none was asked for.
 fn software_fallback(settings: &ExportSettings, venc: &dyn VideoEncoder, declined: Option<String>) -> Option<String> {
@@ -787,7 +787,7 @@ mod tests {
     }
 
     /// A factory that *fails* must not stop the walk: the next factory may be the one that can
-    /// take the export. For H.264 that is FilmCraft's own encoder, and for H.265 it is a second
+    /// take the export. For H.264 that is VL Films' own encoder, and for H.265 it is a second
     /// hardware encoder, because there is no software H.265 encoder at all.
     #[test]
     fn a_failing_factory_does_not_stop_the_walk() {

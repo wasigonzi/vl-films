@@ -3,7 +3,7 @@
 //! A project file is UTF-8 JSON with an explicit schema version:
 //!
 //! ```json
-//! { "format": "filmcraft.project", "schema_version": 2, "generator": "FilmCraft 0.1.0", "project": { … } }
+//! { "format": "filmcraft.project", "schema_version": 2, "generator": "VL Films 0.1.0", "project": { … } }
 //! ```
 //!
 //! - **Versioning.** [`SCHEMA_VERSION`] is the version this build writes. Older files are upgraded on
@@ -81,7 +81,7 @@ impl Loaded {
 
 /// Writer identification stored in the envelope.
 pub fn generator() -> String {
-    format!("FilmCraft {}", env!("CARGO_PKG_VERSION"))
+    format!("VL Films {}", env!("CARGO_PKG_VERSION"))
 }
 
 fn loaded(env: craft_fcproj_format::EnvelopeIn<Project>, schema_version: u32) -> Loaded {
@@ -356,7 +356,7 @@ mod tests {
         v["schema_version"] = Value::from(SCHEMA_VERSION + 1);
         let e = decode(&serde_json::to_vec(&v).unwrap()).unwrap_err();
         assert!(matches!(e, FormatError::TooNew { .. }));
-        assert!(e.to_string().contains("newer version of FilmCraft"), "{e}");
+        assert!(e.to_string().contains("newer version of VL Films"), "{e}");
     }
 
     #[test]

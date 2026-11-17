@@ -1,4 +1,4 @@
-//! The FilmCraft egui frontend.
+//! The VL Films egui frontend.
 //!
 //! Thin by design: all project changes go through `filmcraft_engine::Session::execute`; this crate
 //! owns only presentation state ([`state::UiState`]), GPU textures, the playback clock and the
@@ -6,13 +6,13 @@
 
 #![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable))]
 
-/// FilmCraft as craft-update knows it, with its 128 px icon and accent colour: the update
+/// VL Films as craft-update knows it, with its 128 px icon and accent colour: the update
 /// prompt shows both, and an AppImage's menu entry gets the icon.
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft_update::app::App = craft_update::app::App {
     icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.filmcraft.png")),
-    accent: Some([0x8b, 0x5c, 0xf6]),
-    ..craft_update::suite::FILMCRAFT
+    accent: Some([0x00, 0xd4, 0xff]),
+    ..craft_update::app::App::new("vl-films", "VL Films", "Video editing", "wasigonzi/vl-films")
 };
 
 /// A literal UI string in the language the interface is drawn in (`i18n::t`). Only literals: the
@@ -69,6 +69,7 @@ mod rtl;
 pub mod scrub;
 mod shuttle;
 pub mod source_playback;
+pub mod splash;
 pub mod state;
 pub mod theme;
 mod theme_favorites;

@@ -372,7 +372,7 @@ and an outro.
 
 | encoder | wall time | frames/s | vs real time | file |
 |---|---|---|---|---|
-| FilmCraft software encoder (pre-cutover local implementation) | 793 s | 17.9 | 1.4× slower | 1445 MB, 20.0 Mb/s |
+| VL Films software encoder (pre-cutover local implementation) | 793 s | 17.9 | 1.4× slower | 1445 MB, 20.0 Mb/s |
 | hardware (VideoToolbox) | **311 s** | **45.7** | 1.8× faster | 1417 MB, 19.6 Mb/s |
 
 2.5× faster. The first 134 s of the same timeline, where the overlays are densest (intro, a banner, a
@@ -380,7 +380,7 @@ subscribe bar and the outro in 134 s):
 
 | encoder | wall time | frames/s | vs real time | file |
 |---|---|---|---|---|
-| FilmCraft software encoder (pre-cutover local implementation) | 395 s | 8.5 | 2.9× slower | 340 MB, 20.0 Mb/s |
+| VL Films software encoder (pre-cutover local implementation) | 395 s | 8.5 | 2.9× slower | 340 MB, 20.0 Mb/s |
 | hardware (VideoToolbox) | **84 s** | **39.9** | 1.6× faster | 312 MB, 18.3 Mb/s |
 
 4.7× faster there. The gain depends on what else an export spends its time on: with the encoder
@@ -535,7 +535,7 @@ compositor and the decoders, not by the encoder, so a different hardware codec d
 
 ### Quality per bit
 
-30 s with a banner (15–45 s of that timeline), exported by FilmCraft as ProRes 422 HQ (the reference)
+30 s with a banner (15–45 s of that timeline), exported by VL Films as ProRes 422 HQ (the reference)
 and by each encoder at several bitrates; ffmpeg's `psnr` and `ssim` of the decoded 4:2:0 pictures against
 the reference. Average PSNR over the three planes, and SSIM (higher is better):
 

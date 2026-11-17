@@ -7,7 +7,7 @@ fn shared_rgba(bytes: &[u8]) -> Vec<u8> {
     let [frame] = frames.as_slice() else { panic!("expected one MJPEG frame") };
     match &frame.frame.data {
         PixelData::Rgba8(data) => data.as_ref().clone(),
-        other => panic!("unexpected FilmCraft pixel data: {other:?}"),
+        other => panic!("unexpected VL Films pixel data: {other:?}"),
     }
 }
 

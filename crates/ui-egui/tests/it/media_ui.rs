@@ -525,7 +525,7 @@ fn locate_relinks_instead_of_importing() {
 }
 
 /// [`make_movie`]'s ProRes file with its sample entry retyped `icod`: an Apple Intermediate Codec
-/// movie as far as the demuxer can tell, which no FilmCraft decoder reads (#3646).
+/// movie as far as the demuxer can tell, which no VL Films decoder reads (#3646).
 fn aic_movie(path: &Path) {
     make_movie(path, DemoScene::OceanSunset, 64, 32, 2);
     let mut b = std::fs::read(path).unwrap();
@@ -537,7 +537,7 @@ fn aic_movie(path: &Path) {
     std::fs::write(path, b).unwrap();
 }
 
-/// #3646: a movie in a codec FilmCraft cannot decode (Apple Intermediate Codec) imports under the
+/// #3646: a movie in a codec VL Films cannot decode (Apple Intermediate Codec) imports under the
 /// codec's name, and its Unreadable badge says why on hover, in Icon view and in List view, where a
 /// name longer than the Name column is cut short with "…" to keep the badge in view and shows
 /// in full on hover.

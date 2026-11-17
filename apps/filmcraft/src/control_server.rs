@@ -153,7 +153,7 @@ fn serve_with_timeout(
         // Until the app can drain the queue, a request would outlive its 60 s reply wait and
         // still run after startup: reject it instead, so a client retry is the only copy (#3436).
         if !ready.load(Ordering::Relaxed) {
-            return Some(json!({"ok": false, "error": "FilmCraft is still starting; send the request again"}));
+            return Some(json!({"ok": false, "error": "VL Films is still starting; send the request again"}));
         }
         let (req, rrx) = ControlRequest::new(method, params);
         tx.send(req).ok()?;
@@ -163,7 +163,7 @@ fn serve_with_timeout(
     Ok(())
 }
 
-/// Serve the shared wire protocol with FilmCraft's request size limit.
+/// Serve the shared wire protocol with VL Films' request size limit.
 fn serve_lines<R: Read, W: Write>(read: R, out: W, token: &str, handle: impl FnMut(String, Value) -> Option<Value>) {
     craft_control_protocol::serve_lines(read, out, token, MAX_LINE, handle);
 }

@@ -93,11 +93,11 @@ fn community_links_everywhere() {
     // Header: the Discord button is always there.
     assert_eq!(d.ids("header.discord"), vec!["header.discord".to_string()]);
     d.snapshot("header");
-    // About dialog: Discord first, then website, app page, GitHub, issues.
+    // About dialog: Visualab Studios first, then website and app page.
     d.ok("engine.execute", json!({"command": "app.about", "params": {}}));
     d.frames(3);
     let about = d.ids("about.");
-    for id in ["about.discord", "about.website", "about.appPage", "about.github", "about.reportIssue"] {
+    for id in ["about.discord", "about.website", "about.appPage"] {
         assert!(about.iter().any(|a| a == id), "{id} in {about:?}");
     }
     d.snapshot("about");
@@ -108,7 +108,7 @@ fn community_links_everywhere() {
     d.ok("engine.execute", json!({"command": "mode.import", "params": {}}));
     d.frames(3);
     let home = d.ids("import.link.");
-    for id in ["import.link.discord", "import.link.website", "import.link.appPage", "import.link.github"] {
+    for id in ["import.link.discord", "import.link.website", "import.link.appPage"] {
         assert!(home.iter().any(|a| a == id), "{id} in {home:?}");
     }
     d.snapshot("home");

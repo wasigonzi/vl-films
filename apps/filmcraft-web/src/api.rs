@@ -1,7 +1,7 @@
 //! `window.filmcraft`: the control channel / agent API for the page.
 //!
 //! `request`, `execute`, `commands`, `uiInspect` and `screenshot` come from `craft-web-api`
-//! (storytold/craft-libs#413), the same in every Craft app; FilmCraft adds its own functions on the
+//! (storytold/craft-libs#413), the same in every Craft app; VL Films adds its own functions on the
 //! same object. The same JSON methods as the desktop control channel (`docs/control-protocol.md`)
 //! and the same engine commands as MCP, as promises:
 //!
@@ -55,13 +55,13 @@ pub fn from_js(v: &JsValue) -> Value {
 const POLL_MS: i32 = 16;
 
 /// Queue a control request for the app and wait for its reply, as the protocol's `{ok, result}` /
-/// `{ok: false, error}` object. FilmCraft's control requests cannot be withdrawn, so a call the page
+/// `{ok: false, error}` object. VL Films' control requests cannot be withdrawn, so a call the page
 /// gave up on still runs when the app reaches it, as it does for a desktop client that timed out.
 fn send(method: &str, params: Value) -> Pin<Box<dyn Future<Output = Value>>> {
     let (req, rx) = ControlRequest::new(method, params);
     let sent = TX.with(|t| t.borrow().as_ref().map(|tx| tx.send(req).is_ok()).unwrap_or(false));
     if !sent {
-        return Box::pin(async { json!({"ok": false, "error": "FilmCraft is not running yet"}) });
+        return Box::pin(async { json!({"ok": false, "error": "VL Films is not running yet"}) });
     }
     crate::repaint();
     Box::pin(wait(rx))
@@ -117,7 +117,7 @@ pub async fn fetch_file(url: &str, name: Option<String>) -> Result<web_sys::File
     web_sys::File::new_with_blob_sequence(&parts, &name)
 }
 
-/// Install `window.filmcraft`: the crate's functions, then FilmCraft's own. FilmCraft has no
+/// Install `window.filmcraft`: the crate's functions, then VL Films' own. VL Films has no
 /// `document.inspect`, so `docInspect` is not installed; `inspect` is its `ui.inspect`.
 pub fn install() -> Result<(), JsValue> {
     let request: Request = Rc::new(|method, params| send(&method, params));

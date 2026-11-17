@@ -8,7 +8,7 @@ remain here and now exercise the shared implementation. The private sector-span 
 is upstream with the implementation.
 
 The shared reader additionally defaults to a 1 GiB per-stream and 1,048,576 directory-entry limit;
-FilmCraft does not disable those safeguards. The shared crate is std-only and forbids unsafe code.
+VL Films does not disable those safeguards. The shared crate is std-only and forbids unsafe code.
 
 ## Specification
 

@@ -1,9 +1,9 @@
 # Agents
 
-FilmCraft is built to be driven by AI agents, and largely built by them. Part 1 covers using
-FilmCraft from an agent. Part 2 covers developing FilmCraft as an agent.
+VL Films is built to be driven by AI agents, and largely built by them. Part 1 covers using
+VL Films from an agent. Part 2 covers developing VL Films as an agent.
 
-# Part 1: driving FilmCraft
+# Part 1: driving VL Films
 
 ## 1. MCP server
 
@@ -60,13 +60,13 @@ The release packages ship `filmcraft-cli` alongside the desktop app, so no build
 
 | Install | CLI |
 |---|---|
-| Windows (MSI) | `%LOCALAPPDATA%\Programs\ArtCraft\FilmCraft\filmcraft-cli.exe` by default (`C:\Program Files\ArtCraft\FilmCraft\filmcraft-cli.exe` for an all-users install, under `Program Files (x86)` instead for the 32-bit build, or wherever you installed it otherwise), not on `PATH` |
+| Windows (MSI) | `%LOCALAPPDATA%\Programs\ArtCraft\VL Films\filmcraft-cli.exe` by default (`C:\Program Files\ArtCraft\VL Films\filmcraft-cli.exe` for an all-users install, under `Program Files (x86)` instead for the 32-bit build, or wherever you installed it otherwise), not on `PATH` |
 | Linux (deb, rpm) | `/usr/bin/filmcraft-cli` |
 | macOS | the separate `filmcraft-cli-<version>-macos-<arch>.zip` release asset (the `.app` holds only the desktop app) |
 
 ```sh
 # Windows (PowerShell), default install folder
-claude mcp add filmcraft -- "$env:LOCALAPPDATA\Programs\ArtCraft\FilmCraft\filmcraft-cli.exe" mcp
+claude mcp add filmcraft -- "$env:LOCALAPPDATA\Programs\ArtCraft\VL Films\filmcraft-cli.exe" mcp
 # Linux, or macOS with the CLI unzipped onto PATH
 claude mcp add filmcraft -- filmcraft-cli mcp
 ```
@@ -99,11 +99,11 @@ Typical loop: `project_inspect` / `sequence_inspect` → get ids → `command_ru
 ### Conventions
 
 The server follows a few conventions that make it predictable for agents. They are not
-FilmCraft-specific: the sibling craft apps' MCP servers can follow the same ones, so an agent that has
+VL Films-specific: the sibling craft apps' MCP servers can follow the same ones, so an agent that has
 driven one app can drive the others.
 
 - **Core tools.** `command_list`, `command_run`, `command_batch`, `doc_inspect` and `render_preview`
-  work in both modes. The FilmCraft tools above stay as they are.
+  work in both modes. The VL Films tools above stay as they are.
 - **Titles and annotations.** Every tool has a `title` and the four MCP hints (`readOnlyHint`,
   `destructiveHint`, `idempotentHint`, `openWorldHint`), so a client can let the read-only tools
   (lists, inspects, renders, screenshots) run without asking and ask before edits. When you add a
@@ -161,7 +161,7 @@ progress and stop it:
   the exit status. Frame counts here use the sequence rate, even when the export rate differs.
 - A finished export's `result` (`file.exportMedia` with `wait: true`, its job in `jobs.list`, each
   finished item of `export.queue.list` and `export.queue.add`) names the video encoder that ran in `encoder`: `"NVENC"` or `"VideoToolbox"`, or `"software"` for
-  FilmCraft's own (absent for audio, image sequences and GIF). `hardwareEncoding: "auto"` asks for
+  VL Films' own (absent for audio, image sequences and GIF). `hardwareEncoding: "auto"` asks for
   a hardware encoder but does not promise one: when it declines the export (two-pass VBR, HDR, MXF,
   no driver…) the software encoder runs, and `result.warnings` says so with the reason when there is
   one, e.g. `hardware encoding declined (NVENC: two-pass VBR); the software H.264 encoder ran`. The
@@ -306,10 +306,10 @@ For any UI change, look at the result:
 3. Assert on `ui.inspect`, `ui.elements` and `sequence.inspect`.
 4. Take `ui.screenshot` (the whole window and the panel you changed) and open the PNG.
 
-Screenshots you commit must follow [AGENTS.md](../AGENTS.md) §1: FilmCraft only, openly licensed
+Screenshots you commit must follow [AGENTS.md](../AGENTS.md) §1: VL Films only, openly licensed
 media, sidecar and `ATTRIBUTION.md` entry.
 
-# Part 2: developing FilmCraft
+# Part 2: developing VL Films
 
 ## 4. Orientation, in this order
 
@@ -426,7 +426,7 @@ report URL loss. Imported addresses are checked again before opening.
 `colors.addCustom {color:"#RRGGBB"}` saves a reusable project-local marker/clip swatch (maximum 64). Duplicate colors are no-ops. Palette additions are independently undoable from marker edits.
 Interchange imports fill missing names on existing swatches while preserving target names,
 even when the palette is full. Formats that cannot retain the saved palette warn about its
-loss even if none of its colors are assigned; FilmCraft projects and OTIO retain it.
+loss even if none of its colors are assigned; VL Films projects and OTIO retain it.
 An OTIO collection unions its timelines' saved palettes in encounter order, preserving the
 first valid name and filling missing names for retained colors. Empty later palettes do
 not clear earlier colors. Colors beyond the project's 64-entry limit produce a warning.
@@ -445,15 +445,15 @@ identity for editing; `timeline.markerEnd.<id>`, `source.markerEnd.<id>`, and
 `program.markerEnd.<id>` expose the end flags to automation. Point markers keep their whole flag.
 
 On macOS, custom marker/clip colors and project-palette edits open the system Color panel.
-Its live selection updates only the draft; FilmCraft's Add/Save/Apply and Cancel actions keep
+Its live selection updates only the draft; VL Films' Add/Save/Apply and Cancel actions keep
 ownership of project changes and Undo. Closing the Color panel retains the draft without applying
 it. Colors are converted to opaque sRGB `#RRGGBB`; typed hex values update the open panel.
-Preset swatches and named project colors remain in FilmCraft. Other hosts, headless automation,
-and native-picker failures reuse egui's established opaque color picker with FilmCraft's hex field.
+Preset swatches and named project colors remain in VL Films. Other hosts, headless automation,
+and native-picker failures reuse egui's established opaque color picker with VL Films' hex field.
 The `*.native` automation control reopens the system panel; `*.hex` remains available on either path. Switching projects or leaving
 the draft closes its native panel, and an older draft cannot redirect or close a newer picker.
 While the native Color panel has keyboard focus, its Edit menu uses AppKit's normal text actions
-for Copy/Paste, Select All, and Undo/Redo. FilmCraft's Edit menu returns when its main window
+for Copy/Paste, Select All, and Undo/Redo. VL Films' Edit menu returns when its main window
 regains focus. Temporary panel hiding during app deactivation does not discard the color draft.
 
 This host picker is scoped to marker colors, clip labels, and project palette editing. Existing

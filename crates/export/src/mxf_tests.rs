@@ -186,12 +186,12 @@ fn op_atom_writes_one_file_per_essence() {
     assert_eq!(mv.tracks.len(), 1);
     assert_eq!(mv.tracks[0].wrapping, craft_media::mxf::Wrapping::Clip);
     assert_eq!(mv.tracks[0].samples.len(), 24);
-    // the identification names FilmCraft, as the app's own writer did
-    assert_eq!((mv.product_name.as_deref(), mv.company_name.as_deref()), (Some("FilmCraft"), Some("FilmCraft")));
+    // the identification names VL Films, as the app's own writer did
+    assert_eq!((mv.product_name.as_deref(), mv.company_name.as_deref()), (Some("VL Films"), Some("VL Films")));
     for (k, a) in r.extra_files.iter().enumerate() {
         let b = std::fs::read(a).unwrap();
         let ma = craft_media::mxf::open(&b).unwrap();
-        assert_eq!((ma.product_name.as_deref(), ma.company_name.as_deref()), (Some("FilmCraft"), Some("FilmCraft")));
+        assert_eq!((ma.product_name.as_deref(), ma.company_name.as_deref()), (Some("VL Films"), Some("VL Films")));
         assert_eq!(ma.operational_pattern.name(), "OP-Atom");
         let t = &ma.tracks[0];
         assert_eq!(t.kind, craft_media::mxf::TrackKind::Sound);

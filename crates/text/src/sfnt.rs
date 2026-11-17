@@ -1,4 +1,4 @@
-//! SFNT face metadata discovery for FilmCraft fonts.
+//! SFNT face metadata discovery for VL Films fonts.
 pub use craft_font_catalog::sfnt::{FaceNames, read_faces, read_faces_bytes};
 
 #[cfg(test)]

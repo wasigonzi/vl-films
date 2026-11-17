@@ -12,10 +12,10 @@
 //! ended by this process, which started it and holds its handle, and the next mode is tried. The
 //! window then starts in the first mode that passed, with the fallback notice. When none passes,
 //! the user gets a message naming each mode, where it stopped and on which adapter, instead of a
-//! FilmCraft that never opens.
+//! VL Films that never opens.
 //!
 //! The test runs only when something changed since the last start ([`TEST_FILE`]): another
-//! FilmCraft version, another mode, other display drivers, or a last start that never got its
+//! VL Films version, another mode, other display drivers, or a last start that never got its
 //! window and never came back. Other launches start directly. A start that passed its test, or
 //! skipped it, but neither painted nor returned within [`HUNG_AFTER`] is taken as hung in the
 //! window itself, and the next launch moves on from its mode.
@@ -331,7 +331,7 @@ fn need(record: Option<&Record>, mode: Mode, version: &str, drivers: &str, now: 
         return Need::Test;
     }
     if r.open {
-        // Another FilmCraft may still be starting: only a start this old counts as hung.
+        // Another VL Films may still be starting: only a start this old counts as hung.
         return if now.saturating_sub(r.started) >= HUNG_AFTER.as_secs() { Need::LastHung } else { Need::Test };
     }
     Need::No

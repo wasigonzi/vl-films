@@ -1,7 +1,7 @@
 //! Avid Log Exchange (`.ale`) clip logs (File ▸ Export ▸ Avid Log Exchange…).
 //!
 //! The format itself (the document, its reader and writer, the heading and `Tracks` helpers) comes
-//! from [`craft_timeline::ale`] in craft-libs (craft-libs #778); this module keeps FilmCraft's
+//! from [`craft_timeline::ale`] in craft-libs (craft-libs #778); this module keeps VL Films'
 //! mapping from project items to log rows.
 
 pub use craft_timeline::ale::{AleDoc, fps_text, parse, row_range, write};

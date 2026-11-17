@@ -1,6 +1,6 @@
 # filmcraft-captions
 
-Caption files and caption burn-in for FilmCraft (layer L2: depends on `filmcraft-time`,
+Caption files and caption burn-in for VL Films (layer L2: depends on `filmcraft-time`,
 `filmcraft-color`, `filmcraft-project`, `filmcraft-text` and craft-libs' `craft-captions`).
 
 The caption *model* (caption tracks in a sequence, captions, track style) lives in
@@ -20,7 +20,7 @@ What stays here:
   (language, WebVTT blocks, speakers, cue ids and settings).
 - `track_format`: the caption track format a file maps to (SCC: CEA-608, MCC: CEA-708, STL:
   Teletext, the rest: subtitle).
-- `write_options`: write options that name FilmCraft as the creating program in MCC and EBU STL
+- `write_options`: write options that name VL Films as the creating program in MCC and EBU STL
   files.
 
 ## Burn-in
