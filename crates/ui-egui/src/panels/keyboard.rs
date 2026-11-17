@@ -133,12 +133,12 @@ pub const COMMANDS: &[UiCommand] = &[
     uic!("mixer.showHideTracks", "Show/Hide Tracks…", [], None),
     uic!("mixer.meterInputOnly", "Meter Input(s) Only", [], None),
     uic!("graphics.beginTextEditing", "Begin Text Editing for a Graphic Layer", [], Some("Cmd+Alt+'")),
-    uic!("help.filmcraftHelp", "FilmCraft Help…", ["Help"], Some("F1")),
-    uic!("app.quit", "Quit FilmCraft", [], Some("Cmd+Q")),
+    uic!("help.filmcraftHelp", "VL Films Help…", ["Help"], Some("F1")),
+    uic!("app.quit", "Quit VL Films", [], Some("Cmd+Q")),
 ];
 
-/// FilmCraft's documentation (Help ▸ FilmCraft Help…, F1).
-pub const HELP_URL: &str = "https://github.com/storytold/filmcraft/tree/main/docs";
+/// VL Films' documentation (Help ▸ VL Films Help…, F1).
+pub const HELP_URL: &str = crate::links::APP_PAGE;
 
 const HEIGHT_STEP: f32 = 12.0;
 const MIN_TRACK_H: f32 = 24.0;

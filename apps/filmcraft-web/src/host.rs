@@ -1,20 +1,20 @@
-//! Host modes: a page that runs FilmCraft (as an `<iframe>`, or in its own document) opens
+//! Host modes: a page that runs VL Films (as an `<iframe>`, or in its own document) opens
 //! projects in it and stores what it saves instead of the browser downloading. The messages and
 //! the two transports are `craft-web-host`'s (storytold/craft-libs), the same contract as the
-//! other Craft apps' bridges, with the `filmcraft:` prefix. This module is FilmCraft's part of it.
+//! other Craft apps' bridges, with the `filmcraft:` prefix. This module is VL Films' part of it.
 //!
 //! - `?host=parent` (an `<iframe>`, such as a Nextcloud app) talks to the same-origin parent over
 //!   `postMessage`; `data-host="page"` on the canvas (the page's own document) uses DOM
 //!   `CustomEvent`s on the canvas instead. `?host=parent` wins when both are present. With no
 //!   parent, or a parent on another origin, there is no bridge: the normal app with downloads.
-//! - `filmcraft:ready` once the app is running and listening; send a file now. FilmCraft reads
+//! - `filmcraft:ready` once the app is running and listening; send a file now. VL Films reads
 //!   bytes, so it says `file: false` and a host sends `bytes`.
 //! - `filmcraft:open` (from the host): `{ name, bytes }`. A `.fcproj` opens like a project picked
 //!   with File › Open or dropped on the page; any other file imports like a dropped one. Over
 //!   [`MAX_OPEN_BYTES`] (512 MiB), or a project over [`PROJECT_OPEN_MAX`] (256 MiB, the whole-file
 //!   read), refused before any byte is copied; anything malformed is a message in the app's
 //!   status bar, never a crash.
-//! - `filmcraft:save` (to the host): `{ name, saveAs, bytes }` for every file FilmCraft would
+//! - `filmcraft:save` (to the host): `{ name, saveAs, bytes }` for every file VL Films would
 //!   otherwise download — see the `saveAs` rule below.
 //! - `filmcraft:dirty` whenever unsaved changes appear or go away (the session's own
 //!   unsaved-changes state), `filmcraft:failed` when the app couldn't start.
@@ -45,7 +45,7 @@
 //! In host mode the host sends the document to edit, so no demo project opens and nothing from
 //! an earlier visit is recovered (no OPFS snapshot, no restored media), saves are handed to the
 //! host rather than downloaded, and the host guards leaving the page while changes are
-//! unsaved. FilmCraft has no user names that work could be signed with, so there is no
+//! unsaved. VL Films has no user names that work could be signed with, so there is no
 //! `?author=`.
 
 use std::cell::RefCell;
@@ -73,7 +73,7 @@ pub struct Bridge {
 }
 
 impl Bridge {
-    /// The bridge for this page, or `None` when FilmCraft isn't hosted: no `?host=parent` and no
+    /// The bridge for this page, or `None` when VL Films isn't hosted: no `?host=parent` and no
     /// `data-host="page"` on the canvas, an unframed `?host=parent` page (it stays the normal app
     /// with downloads), or a parent on another origin.
     pub fn connect(canvas: &web_sys::HtmlCanvasElement) -> Option<Self> {
@@ -171,7 +171,7 @@ impl Bridge {
 /// picked or dropped.
 fn deliver_open(bridge: &Bridge, name: &str, data: &FileData) {
     let FileData::Bytes(array) = data else {
-        return rejected_open("FilmCraft reads bytes, not a File".to_string());
+        return rejected_open("VL Films reads bytes, not a File".to_string());
     };
     // The data's own length, as a number: a 4 GiB view must not wrap to 0 and pass the check.
     let len = data.size() as u64;

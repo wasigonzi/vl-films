@@ -1,4 +1,4 @@
-//! Conversion between FilmCraft effect values and the shared timeline model.
+//! Conversion between VL Films effect values and the shared timeline model.
 
 use craft_timeline::model as shared;
 use filmcraft_project as film;
@@ -73,7 +73,7 @@ fn to_effect(effect: &film::EffectInstance) -> Result<shared::EffectInstance, se
             Ok((name.clone(), shared::Param { value: to_value(&param.value)?, keyframes }))
         })
         .collect::<Result<_, serde_json::Error>>()?;
-    // Shared OTIO emits extension fields after the shared fields; retain FilmCraft's effect-only data.
+    // Shared OTIO emits extension fields after the shared fields; retain VL Films' effect-only data.
     let ext = serde_json::json!({"masks": effect.masks, "post_fader": effect.post_fader, "essential": effect.essential, "layer": effect.layer});
     Ok(shared::EffectInstance { effect: effect.effect.clone(), enabled: effect.enabled, params, ext: Some(serde_json::to_string(&ext)?) })
 }
@@ -158,7 +158,7 @@ fn from_marker(marker: &shared::Marker) -> Result<film::Marker, serde_json::Erro
 }
 
 // The neutral interchange model carries only the settings common to timeline formats.
-// The complete FilmCraft value is retained separately in item metadata by the adapter.
+// The complete VL Films value is retained separately in item metadata by the adapter.
 fn to_settings(settings: &film::SequenceSettings) -> shared::SequenceSettings {
     shared::SequenceSettings {
         width: settings.width,
@@ -777,7 +777,7 @@ type SharedImport = fn(&str, &craft_timeline::ImportOptions, &mut craft_timeline
 type SharedExport =
     fn(&shared::Project, shared::ItemId, &craft_timeline::ExportOptions, &mut craft_timeline::Report, Option<usize>) -> craft_timeline::Result<String>;
 
-/// Read `text` with a shared timeline reader, keeping its report notes, into FilmCraft's model.
+/// Read `text` with a shared timeline reader, keeping its report notes, into VL Films' model.
 fn import_shared(text: &str, opts: &crate::ImportOptions, report: &mut crate::Report, import: SharedImport) -> crate::Result<crate::Imported> {
     let catalog = FilmCatalog;
     let shared_opts =

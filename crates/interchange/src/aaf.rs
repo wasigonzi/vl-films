@@ -11,7 +11,7 @@
 //! - one timeline slot per video track (picture) and per audio track (sound; one per channel when
 //!   broken out to mono), each a **Sequence** of **Filler**s, **SourceClip**s and **Transition**s
 //!   (Cross Dissolve → `VideoDissolve_2`, Dip to Black → `VideoFadeToBlack`, audio crossfades →
-//!   `MonoAudioDissolve`; the FilmCraft effect id is kept in a tagged value),
+//!   `MonoAudioDissolve`; the VL Films effect id is kept in a tagged value),
 //! - clip volume as a `MonoAudioGain` **OperationGroup** around the source clip with an
 //!   `Amplitude` **ConstantValue** or **VaryingValue** (keyframes as control points),
 //! - sequence markers as **CommentMarker**s in an event slot;
@@ -28,7 +28,7 @@
 //!
 //! Import reads the same structures (and the common variations: sequences inside sequences,
 //! selectors, operation groups around clips, legacy data definitions, essence groups, and Premiere
-//! Pro's one video slot holding a nested scope with a segment per video track) into FilmCraft
+//! Pro's one video slot holding a nested scope with a segment per video track) into VL Films
 //! sequences (a composition that others use becomes a nested sequence), media items (linked by path; embedded audio is returned as WAV files for the
 //! caller to write) and markers.
 
@@ -64,10 +64,10 @@ pub fn export(project: &Project, sequence: ItemId, opts: &AafOptions) -> Result<
     let name = opts.name.clone().or_else(|| project.item(sequence).map(|i| i.name.clone())).unwrap_or_else(|| "Sequence".into());
     let doc = comp::from_project(project, sequence, &name, &opts.media, comp::Nests::Compositions, &mut report)?;
     let identity = craft_aaf::Identity {
-        company: "FilmCraft",
-        product: "FilmCraft",
+        company: "VL Films",
+        product: "VL Films",
         version: env!("CARGO_PKG_VERSION"),
-        platform: "FilmCraft",
+        platform: "VL Films",
         product_id: [0x4d, 0x4c, 0x49, 0x46, 0x52, 0x43, 0x46, 0x41, b'T', b'-', b'A', b'A', b'F', b'-', b'E', b'P'],
     };
     let options = craft_aaf::aaf::WriteOptions { identity, small_sectors: opts.small_sectors };

@@ -30,7 +30,7 @@
 //! later start (#2581). When every mode has failed, [`failure_message`] lists each one with its
 //! error, how to choose a mode by hand, and where the log is. A panic out of wgpu before the app
 //! exists (a surface the chosen GPU claimed and then could not configure, #2553) saves the next
-//! mode and starts FilmCraft again in it, once: the event loop does not run again in a process it
+//! mode and starts VL Films again in it, once: the event loop does not run again in a process it
 //! unwound out of.
 //!
 //! # Getting back
@@ -156,7 +156,7 @@ fn failure_message_for(error: &str, failed: &[(Mode, String)], log: Option<&Path
             None => text.to_string(),
         }
     };
-    let mut msg = format!("FilmCraft could not start its window: {}\n", shorten(error));
+    let mut msg = format!("VL Films could not start its window: {}\n", shorten(error));
     if !failed.is_empty() {
         msg.push_str("\nGraphics modes tried:\n");
         for (mode, err) in failed {
@@ -166,9 +166,9 @@ fn failure_message_for(error: &str, failed: &[(Mode, String)], log: Option<&Path
     msg.push_str("\nUpdating the graphics driver usually fixes this.");
     if ladder.len() > 1 {
         let names: Vec<String> = ladder.iter().map(|m| format!("--graphics {}", m.name())).collect();
-        msg.push_str(&format!(" To choose a graphics mode yourself, start FilmCraft with {}.", names.join(", ")));
+        msg.push_str(&format!(" To choose a graphics mode yourself, start VL Films with {}.", names.join(", ")));
     }
-    msg.push_str(&format!("\n\nFilmCraft {} ({} {})", env!("CARGO_PKG_VERSION"), std::env::consts::OS, std::env::consts::ARCH));
+    msg.push_str(&format!("\n\nVL Films {} ({} {})", env!("CARGO_PKG_VERSION"), std::env::consts::OS, std::env::consts::ARCH));
     if let Some(log) = log {
         msg.push_str(&format!("\nDetails are in {}", log.display()));
     }

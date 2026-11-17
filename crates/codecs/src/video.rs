@@ -181,7 +181,7 @@ pub type VideoDecoderFactory = fn(&SampleEntry) -> Option<Result<Box<dyn VideoDe
 /// Motion-JPEG / Photo-JPEG (each sample is a complete JPEG).
 pub struct MjpegDecoder;
 
-/// Convert decoded 8-bit Motion JPEG samples to RGBA, reporting a component count FilmCraft cannot show.
+/// Convert decoded 8-bit Motion JPEG samples to RGBA, reporting a component count VL Films cannot show.
 fn mjpeg_rgba(samples: &[u8], components: u8) -> Result<Vec<u8>> {
     craft_jpeg::to_rgba8(samples, components)
         .map_err(|craft_jpeg::UnsupportedComponents(n)| CodecError::Decode(format!("unsupported JPEG component count {n}")))
@@ -211,7 +211,7 @@ impl VideoDecoder for MjpegDecoder {
         limits.max_alloc = 512 << 20;
         let decoded = craft_jpeg::decode(&sample, &limits, adobe).map_err(|e| CodecError::Decode(e.to_string()))?;
         let craft_jpeg::Samples::U8(samples) = decoded.samples else {
-            return Err(CodecError::Decode("12-bit Motion JPEG is not supported by FilmCraft frames".into()));
+            return Err(CodecError::Decode("12-bit Motion JPEG is not supported by VL Films frames".into()));
         };
         let rgba = mjpeg_rgba(&samples, decoded.components)?;
         Ok(vec![DecodedFrame { pts, frame: VideoFrame::rgba8(decoded.width, decoded.height, rgba), draft: false }])
@@ -316,7 +316,7 @@ impl VideoDecoder for H264Decoder {
         }
     }
     fn name(&self) -> &str {
-        "FilmCraft H.264"
+        "VL Films H.264"
     }
     fn thread_limited(&self) -> bool {
         self.threads < h264_threads()
@@ -441,7 +441,7 @@ impl VideoDecoder for HevcDecoder {
         }
     }
     fn name(&self) -> &str {
-        "FilmCraft HEVC"
+        "VL Films HEVC"
     }
     fn is_disposable(&self, sample: &[u8]) -> bool {
         hevc_disposable(sample, self.length_size, self.highest_tid)
@@ -569,7 +569,7 @@ impl VideoDecoder for Vp9Decoder {
         self.dec.reset();
     }
     fn name(&self) -> &str {
-        "FilmCraft VP9"
+        "VL Films VP9"
     }
     fn set_draft(&mut self, on: bool) {
         self.dec.set_draft(on);
@@ -587,7 +587,7 @@ pub fn vp9_factory(e: &SampleEntry) -> Option<Result<Box<dyn VideoDecoder>>> {
 }
 
 /// VP8 container adapter (RFC 6386): WebM / Matroska `V_VP8` and MP4 `vp08`.
-/// The bitstream decoder is provided by craft-video; this adapter maps its pictures into FilmCraft frames.
+/// The bitstream decoder is provided by craft-video; this adapter maps its pictures into VL Films frames.
 pub struct Vp8Decoder {
     dec: craft_video::vp8::Decoder,
 }
@@ -628,7 +628,7 @@ impl VideoDecoder for Vp8Decoder {
         self.dec.reset();
     }
     fn name(&self) -> &str {
-        "FilmCraft VP8"
+        "VL Films VP8"
     }
     fn is_random_access(&self, sample: &[u8]) -> Option<bool> {
         Some(craft_video::vp8::is_keyframe(sample))
@@ -717,7 +717,7 @@ impl VideoDecoder for Av1Decoder {
         self.primed = false;
     }
     fn name(&self) -> &str {
-        "FilmCraft AV1"
+        "VL Films AV1"
     }
     fn set_draft(&mut self, on: bool) {
         self.dec.set_draft(on);
@@ -772,7 +772,7 @@ impl VideoDecoder for ProResDecoder {
     }
     fn reset(&mut self) {}
     fn name(&self) -> &str {
-        "FilmCraft ProRes"
+        "VL Films ProRes"
     }
     fn intra_only(&self) -> bool {
         true
@@ -840,7 +840,7 @@ impl VideoDecoder for ApvDecoder {
     }
     fn reset(&mut self) {}
     fn name(&self) -> &str {
-        "FilmCraft APV"
+        "VL Films APV"
     }
     fn intra_only(&self) -> bool {
         true
@@ -912,7 +912,7 @@ impl VideoDecoder for DnxDecoder {
     }
     fn reset(&mut self) {}
     fn name(&self) -> &str {
-        "FilmCraft DNxHD/DNxHR"
+        "VL Films DNxHD/DNxHR"
     }
     fn intra_only(&self) -> bool {
         true
@@ -1017,7 +1017,7 @@ impl VideoDecoder for Mpeg2Decoder {
         self.prime();
     }
     fn name(&self) -> &str {
-        "FilmCraft MPEG-2"
+        "VL Films MPEG-2"
     }
     fn is_random_access(&self, sample: &[u8]) -> Option<bool> {
         Some(craft_video::mpeg2::scan_access_unit(sample).is_intra())
@@ -1153,7 +1153,7 @@ mod hevc_convert_tests {
 /// Uncompressed AVI and QuickTime pixel layouts from the shared video library.
 pub use craft_video::raw_video::RawFormat;
 
-/// Uncompressed frame decoder retaining FilmCraft timing and color presentation.
+/// Uncompressed frame decoder retaining VL Films timing and color presentation.
 pub struct RawVideoDecoder {
     format: RawFormat,
     width: u32,
@@ -1242,7 +1242,7 @@ mod raw_video_tests {
     }
 }
 
-/// Decode with FilmCraft's historical 1 GiB ProRes output-plane ceiling.
+/// Decode with VL Films' historical 1 GiB ProRes output-plane ceiling.
 fn decode_prores_frame(sample: &[u8]) -> std::result::Result<craft_video::prores::Frame, craft_video::prores::Error> {
     let limits = craft_video::prores::DecodeLimits { max_pixels: u64::MAX, max_frame_bytes: 1 << 30 };
     craft_video::prores::decode_frame_with_limits(sample, &craft_video::prores::DecodeOptions::default(), &limits)
@@ -1283,7 +1283,7 @@ mod prores_resource_tests {
     #[test]
     fn prores_decoder_preserves_the_one_gibibyte_plane_limit() {
         // 4:4:4 + 16-bit alpha: four u16 planes. This is 960,000,000 output bytes,
-        // above craft-video's default 300 MiB but below FilmCraft's prior 1 GiB ceiling.
+        // above craft-video's default 300 MiB but below VL Films' prior 1 GiB ceiling.
         let data = header(12_000, 10_000);
         assert!(matches!(decode_prores_frame(&data), Err(craft_video::prores::Error::Truncated)));
         assert!(matches!(
@@ -1297,27 +1297,27 @@ mod prores_resource_tests {
     }
 }
 
-/// FilmCraft's historical DNx ceiling: the decoded storage of a whole frame (the coded planes of
+/// VL Films' historical DNx ceiling: the decoded storage of a whole frame (the coded planes of
 /// every coding unit plus the output picture) stays within 1 GiB. That covers 8K DNxHR 444 with
 /// alpha (about 570 MB of 16-bit samples), which craft-video's default 256 MiB per-unit plane
 /// budget would refuse.
 const DNX_MAX_FRAME_BYTES: usize = 1 << 30;
 
-/// Decode one DNx frame with craft-video, keeping FilmCraft's 1 GiB whole-frame limit.
+/// Decode one DNx frame with craft-video, keeping VL Films' 1 GiB whole-frame limit.
 fn decode_dnx_frame(sample: &[u8]) -> craft_video::dnx::Result<craft_video::dnx::Frame> {
     let h = craft_video::dnx::probe(sample)?;
     check_dnx_frame_budget(&h)?;
     craft_video::dnx::decode_frame_with(sample, &dnx_decode_options())
 }
 
-/// craft-video decode options with the per-unit plane budget raised to FilmCraft's frame ceiling
+/// craft-video decode options with the per-unit plane budget raised to VL Films' frame ceiling
 /// (the whole-frame check above is the binding limit).
 fn dnx_decode_options() -> craft_video::dnx::DecodeOptions {
     craft_video::dnx::DecodeOptions { max_decoded_plane_bytes: DNX_MAX_FRAME_BYTES, ..Default::default() }
 }
 
 /// Reject a frame whose decoded storage would exceed [`DNX_MAX_FRAME_BYTES`] before anything is
-/// allocated (the check the FilmCraft-local decoder ran on the first coding-unit header).
+/// allocated (the check the VL Films-local decoder ran on the first coding-unit header).
 fn check_dnx_frame_budget(h: &craft_video::dnx::FrameHeader) -> craft_video::dnx::Result<()> {
     use craft_video::dnx::{ChromaFormat, Error};
     const TOO_BIG: Error = Error::Invalid("frame dimensions exceed the decoder memory limit");
@@ -1376,7 +1376,7 @@ mod dnx_resource_tests {
 
     #[test]
     fn dnx_decoder_keeps_the_one_gibibyte_frame_limit() {
-        // Port of the FilmCraft-local `rejects_frames_over_the_memory_limit`: a 16384x16384 4:4:4
+        // Port of the VL Films-local `rejects_frames_over_the_memory_limit`: a 16384x16384 4:4:4
         // header with alpha is refused before any plane is allocated.
         let (_, big) = header_only(16384, 16384, true);
         assert!(craft_video::dnx::probe(&big).is_ok());
@@ -1387,7 +1387,7 @@ mod dnx_resource_tests {
     #[test]
     fn dnx_budget_admits_8k_444_with_alpha() {
         // 8K DNxHR 444 with alpha is about 566 MB of decoded storage (one coding unit of four
-        // 16-bit planes is about 283 MB): inside FilmCraft's 1 GiB ceiling, but above
+        // 16-bit planes is about 283 MB): inside VL Films' 1 GiB ceiling, but above
         // craft-video's default per-unit budget, so the app must keep raising the shared limit.
         let (h, _) = header_only(8192, 4320, true);
         assert!(check_dnx_frame_budget(&h).is_ok());

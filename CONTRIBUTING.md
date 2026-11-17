@@ -1,4 +1,4 @@
-# Contributing to FilmCraft
+# Contributing to VL Films
 
 Thanks for helping. Before you start:
 

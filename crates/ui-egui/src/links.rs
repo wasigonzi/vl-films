@@ -1,29 +1,27 @@
-//! Community and project links (Help menu, About dialog, header Discord button, Home screen).
+//! Community and product links (Help menu, About dialog, header Visualab Studios button, Home
+//! screen).
 //!
-//! FilmCraft is part of the ArtCraft family: the community lives on the ArtCraft Discord, every
-//! app has a page on the ArtCraft website and a public GitHub repository.
+//! VL Films is made by Visualab Studios: every link goes to the Visualab Studios website.
 
-/// The app's short name, used in the website and repository URLs.
-pub const APP: &str = "filmcraft";
+/// The product name shown to users. Change it here (and in the web page's `index.html`).
+pub const APP_NAME: &str = "VL Films";
 
-/// The ArtCraft community Discord.
-pub const DISCORD: &str = "https://discord.gg/artcraft";
-/// The ArtCraft website.
-pub const WEBSITE: &str = "https://getartcraft.com";
-/// FilmCraft's page on the ArtCraft website.
-pub const APP_PAGE: &str = "https://getartcraft.com/apps/filmcraft";
-/// FilmCraft's source repository.
-pub const GITHUB: &str = "https://github.com/storytold/filmcraft";
-/// New issue on FilmCraft's repository.
-pub const ISSUES: &str = "https://github.com/storytold/filmcraft/issues";
+/// The app's short name, used in the website URL.
+pub const APP: &str = "vl-films";
+
+/// The Visualab Studios website (the primary, accented link; its command id stays `help.discord`
+/// for compatibility with saved shortcuts and automation scripts).
+pub const DISCORD: &str = "https://www.visualabstudios.com";
+/// The Visualab Studios website.
+pub const WEBSITE: &str = "https://www.visualabstudios.com";
+/// VL Films' page on the Visualab Studios website.
+pub const APP_PAGE: &str = "https://www.visualabstudios.com/vl-tools/vl-films";
 
 /// (command id, label, url) for every link, in menu order.
-pub const ALL: [(&str, &str, &str); 5] = [
-    ("help.discord", "Join the ArtCraft Discord…", DISCORD),
-    ("help.website", "ArtCraft Website", WEBSITE),
-    ("help.appPage", "FilmCraft on getartcraft.com", APP_PAGE),
-    ("help.github", "FilmCraft on GitHub", GITHUB),
-    ("help.reportIssue", "Report an Issue…", ISSUES),
+pub const ALL: [(&str, &str, &str); 3] = [
+    ("help.discord", "Visit Visualab Studios…", DISCORD),
+    ("help.website", "Visualab Studios Website", WEBSITE),
+    ("help.appPage", "VL Films on visualabstudios.com", APP_PAGE),
 ];
 
 /// A link the web browser couldn't open (`ui.failedLink`): the address and the reason.
@@ -39,7 +37,7 @@ pub fn url_for(command: &str) -> Option<&'static str> {
 }
 
 /// What a Help menu item does, shown when the pointer rests on it: just the address a link opens
-/// in the web browser, or what an item that stays inside FilmCraft does.
+/// in the web browser, or what an item that stays inside VL Films does.
 pub fn menu_hint(command: &str) -> Option<String> {
     let url = if command == "help.filmcraftHelp" { Some(crate::panels::keyboard::HELP_URL) } else { url_for(command) };
     if let Some(url) = url {
@@ -49,8 +47,8 @@ pub fn menu_hint(command: &str) -> Option<String> {
         match command {
             "help.revealLogFiles" => tl!("Saves this session's log and shows it in your file manager."),
             "help.systemCompatibilityReport" => tl!("Shows a report on this computer."),
-            "app.about" => tl!("Shows the version, community links and credits in a FilmCraft window."),
-            "app.checkForUpdates" => tl!("Looks for a newer FilmCraft release and offers to update."),
+            "app.about" => tl!("Shows the version, community links and credits in a VL Films window."),
+            "app.checkForUpdates" => tl!("Looks for a newer VL Films release and offers to update."),
             _ => return None,
         }
         .to_string(),
@@ -126,9 +124,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn urls_follow_the_artcraft_scheme() {
-        assert_eq!(APP_PAGE, format!("{WEBSITE}/apps/{APP}"));
-        assert_eq!(GITHUB, format!("https://github.com/storytold/{APP}"));
+    fn urls_follow_the_visualab_scheme() {
+        assert_eq!(APP_PAGE, format!("{WEBSITE}/vl-tools/{APP}"));
         assert!(ALL.iter().all(|(id, _, u)| id.starts_with("help.") && u.starts_with("https://")));
         assert_eq!(url_for("help.discord"), Some(DISCORD));
         assert_eq!(url_for("help.nope"), None);
@@ -159,12 +156,12 @@ mod tests {
 
         // A failing opener falls back to `ctx.open_url` instead of losing the click.
         app.hooks.open_url = Some(Box::new(|_: &str| Err("no browser".into())));
-        open(&mut app, &ctx, ISSUES);
+        open(&mut app, &ctx, APP_PAGE);
         let fallback: Vec<String> =
             ctx.output(|o| o.commands.iter().filter_map(|c| if let egui::OutputCommand::OpenUrl(u) = c { Some(u.url.clone()) } else { None }).collect());
-        assert_eq!(fallback, [ISSUES]);
+        assert_eq!(fallback, [APP_PAGE]);
         // ... and keeps the address on screen with the reason until the dialog is closed
-        assert_eq!(app.ui.failed_link, Some(FailedLink { url: ISSUES.into(), error: "no browser".into() }));
+        assert_eq!(app.ui.failed_link, Some(FailedLink { url: APP_PAGE.into(), error: "no browser".into() }));
     }
 
     /// The failed-link dialog shows the address until it is closed, and Copy copies it.
@@ -181,11 +178,11 @@ mod tests {
             out.textures_delta.clear();
             out
         };
-        open(&mut app, &egui::Context::default(), GITHUB);
+        open(&mut app, &egui::Context::default(), APP_PAGE);
         for _ in 0..3 {
             frame(&mut app, Vec::new());
         }
-        assert!(app.auto.elements.iter().find(|e| e.id == "failedLink.url").is_some_and(|e| e.label == GITHUB), "address shown");
+        assert!(app.auto.elements.iter().find(|e| e.id == "failedLink.url").is_some_and(|e| e.label == APP_PAGE), "address shown");
         let at = |app: &crate::FilmcraftApp, id: &str| {
             app.auto.elements.iter().find(|e| e.id == id).map(|e| egui::pos2(e.rect[0] + e.rect[2] / 2.0, e.rect[1] + e.rect[3] / 2.0)).unwrap()
         };
@@ -201,7 +198,7 @@ mod tests {
             copied
         };
         let copy = at(&app, "failedLink.copy");
-        assert_eq!(click(&mut app, copy), [GITHUB]);
+        assert_eq!(click(&mut app, copy), [APP_PAGE]);
         // other frames (another window in front) don't close it; Close does
         for _ in 0..3 {
             frame(&mut app, Vec::new());

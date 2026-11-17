@@ -1,4 +1,4 @@
-//! DPX (`.dpx`) stills: craft-dpx (SMPTE ST 268) reads the header and the code values; FilmCraft
+//! DPX (`.dpx`) stills: craft-dpx (SMPTE ST 268) reads the header and the code values; VL Films
 //! turns them into RGBA8 for the still pipeline.
 //!
 //! The first image element is decoded: luma, RGB, RGBA, ABGR, or Y'CbCr (CbYCrY 4:2:2, CbYACrYA

@@ -499,7 +499,7 @@ pub(crate) fn h264_factory(format: Format, w: u32, h: u32, rate: FrameRate, s: &
         return None;
     }
     let mut cfg = craft_video::h264::EncoderConfig::new(w, h, rate.num as u32, rate.den as u32);
-    // Keep the existing FilmCraft identification SEI string instead of the shared crate default.
+    // Keep the existing VL Films identification SEI string instead of the shared crate default.
     cfg.writer = format!("filmcraft-h264enc {}", env!("CARGO_PKG_VERSION"));
     // MXF carries the Annex B byte stream (ST 381-3) with in-band parameter sets
     cfg.format = if s.format.is_mxf() { craft_video::h264::PacketFormat::AnnexB } else { craft_video::h264::PacketFormat::LengthPrefixed };

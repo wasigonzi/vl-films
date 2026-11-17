@@ -1,8 +1,8 @@
 asset:        filmcraft.icns
-title:        FilmCraft app icon, macOS .icns
-author:       Brandon Thomas (FilmCraft owner), for the FilmCraft project
-source:       original work (drawn by the owner in ArtCraft, then vectorised)
+title:        VL Films app icon (Visualab Studios brand mark), macOS .icns
+author:       Visualab Studios
+source:       original work (Visualab Studios brand mark)
 license:      MIT OR Apache-2.0
 license-file: assets/app-icon/LICENSE.txt
-added:        2026-10-02 by Claude (agent) for Brandon Thomas
-notes:        Built from resvg renders of filmcraft.svg (Apple icon grid) with iconutil by packaging/icons.sh.
+added:        2026-11-16 by Visualab Studios
+notes:        Visualab Studios brand mark, same artwork as VL Studios and VL Vector.

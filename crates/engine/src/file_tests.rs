@@ -72,7 +72,7 @@ fn legacy_project_opens_and_first_save_keeps_a_backup() {
     v["schema_version"] = json!(filmcraft_format::SCHEMA_VERSION + 1);
     std::fs::write(&path, serde_json::to_vec(&v).unwrap()).unwrap();
     let e = Session::default().execute("file.open", json!({"path": p})).unwrap_err().to_string();
-    assert!(e.contains("newer version of FilmCraft"), "{e}");
+    assert!(e.contains("newer version of VL Films"), "{e}");
     let _ = std::fs::remove_dir_all(&d);
 }
 
@@ -94,7 +94,7 @@ fn project_is_named_after_its_file() {
     let _ = std::fs::remove_dir_all(&d);
 }
 
-/// A bounded read refuses an oversize file before its bytes are read (audit: FilmCraft F1).
+/// A bounded read refuses an oversize file before its bytes are read (audit: VL Films F1).
 #[test]
 fn bounded_read_refuses_a_file_over_the_limit() {
     let d = temp_dir("bounded-read");

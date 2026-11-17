@@ -1,11 +1,11 @@
-//! FilmCraft captions.
+//! VL Films captions.
 //!
 //! - **Files:** SubRip, WebVTT, Scenarist SCC, MacCaption MCC, EBU STL and TTML / DFXP come from
 //!   [`craft_captions`] in craft-libs, re-exported here (`filmcraft_captions::srt`, [`parse`],
 //!   [`write`], [`Document`] and the rest). Format fixes go there.
 //! - **Model:** [`track_from_document`] / [`document_from_track`] convert to and from the project's
 //!   [`CaptionTrack`]; [`track_format`] names the track format a file maps to.
-//! - **Writing:** [`write_options`] fills in FilmCraft's name as the creating program (MCC, EBU STL).
+//! - **Writing:** [`write_options`] fills in VL Films' name as the creating program (MCC, EBU STL).
 //! - **Burn-in:** [`burn`] lays a caption out with the track style and draws it with the
 //!   `filmcraft-text` engine (Inter SemiBold, shaped and kerned).
 
@@ -17,10 +17,10 @@ pub use craft_captions::*;
 
 use filmcraft_project::{Caption, CaptionFormat, CaptionTrack, ClipId, TrackId};
 
-/// The creating program FilmCraft's MCC and EBU STL files name.
-pub const PROGRAM: &str = "FilmCraft";
+/// The creating program VL Films' MCC and EBU STL files name.
+pub const PROGRAM: &str = "VL Films";
 
-/// Write options with FilmCraft as the creating program.
+/// Write options with VL Films as the creating program.
 pub fn write_options(drop_frame: bool, rate: Option<FrameRate>) -> WriteOptions {
     WriteOptions { drop_frame, rate, program: PROGRAM, ..WriteOptions::default() }
 }
@@ -95,7 +95,7 @@ mod tests {
             ..Default::default()
         };
         let mcc = String::from_utf8(write(&doc, Format::Mcc, write_options(true, None))).unwrap();
-        assert!(mcc.contains("Creation Program=FilmCraft"), "{mcc}");
+        assert!(mcc.contains("Creation Program=VL Films"), "{mcc}");
         let stl = write(&doc, Format::Stl, write_options(false, None));
         assert!(stl.windows(PROGRAM.len()).any(|w| w == PROGRAM.as_bytes()));
     }

@@ -69,7 +69,7 @@ craft-y4m = { version = "0.1.0", git = "https://github.com/storytold/craft-libs"
 # Shared lossless JPEG decoding for DNG.
 craft-raw = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "bea91b1861eea3889bec9d26338076f2ff31c4ac", default-features = false }
 craft-tga = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "82062077bba679ba5236e2d1a391f02d1533cbab" }
-# Shared OMF Bento container; its object model stays in FilmCraft.
+# Shared OMF Bento container; its object model stays in VL Films.
 craft-aaf = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "b3643af6477326e840f86be78c89357f5308ba1d" }
 craft-cfb = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "7f3fdc0dfebd03f33a241f91f916e9a78d3e5c93" }
 craft-docpath = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "47107f660191de2f0b425569506f4daa4faadac9" }
@@ -87,7 +87,7 @@ craft-captions = { version = "0.1.0", git = "https://github.com/storytold/craft-
 # Shared frontend components; keep this dependency above the engine boundary.
 craft-ui = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "47107f660191de2f0b425569506f4daa4faadac9", features = ["serde", "native-windows"] }
 # egui 0.37: bundled fonts are opt-in, and the monochrome symbol/emoji faces moved to their own
-# feature. FilmCraft paints ✔ ✓ ✖ ⚡ ⚠ ⚙ ♪ ☑ in panel chrome, so both features are part of the
+# feature. VL Films paints ✔ ✓ ✖ ⚡ ⚠ ⚙ ♪ ☑ in panel chrome, so both features are part of the
 # production font policy (system_fonts stays off).
 egui = { version = "0.37", features = ["default_fonts", "monochrome_emoji_fonts"] }
 # Resizable table columns (About ▸ Contributors / Models); no image loaders.

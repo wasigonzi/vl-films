@@ -3,7 +3,7 @@
 //! host the app is `craft-web-host`'s. Pure, so it is tested natively in `tests/it/hostmode.rs`.
 
 /// The file name used when an open request carries no usable one: an untitled project — what
-/// a host that never names a file still opens (FilmCraft's document is its project file).
+/// a host that never names a file still opens (VL Films' document is its project file).
 pub const DEFAULT_OPEN_NAME: &str = "Untitled.fcproj";
 
 /// The extension that makes a host's file open like File › Open; anything else imports like a
@@ -29,7 +29,7 @@ pub fn is_project(name: &str) -> bool {
     name.to_ascii_lowercase().ends_with(PROJECT_EXT)
 }
 
-/// The largest `filmcraft:open` payload, refused before any byte is copied. FilmCraft has no
+/// The largest `filmcraft:open` payload, refused before any byte is copied. VL Films has no
 /// single open limit (media is read through a chunked cache, projects whole at 256 MiB), so
 /// the bridge takes the family's sane default.
 pub const MAX_OPEN_BYTES: u64 = 512 << 20;

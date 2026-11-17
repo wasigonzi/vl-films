@@ -147,15 +147,13 @@ pub const UI_COMMANDS: &[UiCommand] = &[
     uic!("mode.import", "Import", [], None),
     uic!("mode.edit", "Edit", [], None),
     uic!("mode.export", "Export", ["File", "Export"], Some("Cmd+M")),
-    uic!("help.discord", "Join the ArtCraft Discord…", ["Help"], None),
-    uic!("help.website", "ArtCraft Website", ["Help"], None),
-    uic!("help.appPage", "FilmCraft on getartcraft.com", ["Help"], None),
-    uic!("help.github", "FilmCraft on GitHub", ["Help"], None),
-    uic!("help.reportIssue", "Report an Issue…", ["Help"], None),
+    uic!("help.discord", "Visit Visualab Studios…", ["Help"], None),
+    uic!("help.website", "Visualab Studios Website", ["Help"], None),
+    uic!("help.appPage", "VL Films on visualabstudios.com", ["Help"], None),
     uic!("help.revealLogFiles", "Reveal Log Files…", ["Help"], None),
     uic!("help.systemCompatibilityReport", "System Compatibility Report…", ["Help"], None),
     uic!("app.checkForUpdates", "Check for Updates…", ["Help"], None),
-    uic!("app.about", "About FilmCraft", ["Help"], None),
+    uic!("app.about", "About VL Films", ["Help"], None),
     uic!("app.keyboardShortcuts", "Keyboard Shortcuts…", ["Edit"], Some("Cmd+Alt+K")),
     uic!("app.settings.general", "General…", ["Edit", "Preferences"], Some("Cmd+,")),
     uic!("app.settings.appearance", "Appearance…", ["Edit", "Preferences"], None),
@@ -930,7 +928,7 @@ pub const MENUS: [&str; 9] = ["File", "Edit", "Clip", "Sequence", "Markers", "Gr
 /// Labels only the native macOS app menu shows, with no command in the menu tree behind them: the
 /// Settings submenu and the predefined Hide, Hide Others and Quit items. They are translated through
 /// the catalogs like menu labels (`apps/filmcraft/src/native_menu.rs`).
-pub const NATIVE_APP_MENU: [&str; 4] = ["Settings", "Hide FilmCraft", "Hide Others", "Quit FilmCraft"];
+pub const NATIVE_APP_MENU: [&str; 4] = ["Settings", "Hide VL Films", "Hide Others", "Quit VL Films"];
 
 pub fn menu_items(app: &FilmcraftApp) -> Vec<MenuItem> {
     let mut v = menu_items_for(&app.session);
@@ -1119,7 +1117,7 @@ pub fn bindings(app: &FilmcraftApp) -> Vec<KeyBinding> {
     v.extend(shifted);
     // `+` is the `=` key with Shift on US layouts and its own key on others and the keypad: a chord
     // on `=` takes it too, unless something is bound to `+` itself. Otherwise Ctrl+Plus fell
-    // through to egui's interface zoom while Ctrl+- and Ctrl+0 were taken by FilmCraft
+    // through to egui's interface zoom while Ctrl+- and Ctrl+0 were taken by VL Films
     // shortcuts, so the interface grew and could not shrink back (#2253).
     let plus: Vec<KeyBinding> = v
         .iter()
@@ -1386,7 +1384,7 @@ fn menu_entry(ui: &mut egui::Ui, it: &MenuItem, auto: &mut crate::automation::Re
         b = b.shortcut_text(shortcut_text(s));
     }
     let r = ui.add_enabled(it.enabled, b);
-    // Help items show the address they open, or say what they do inside FilmCraft
+    // Help items show the address they open, or say what they do inside VL Films
     if let Some(hint) = crate::links::menu_hint(&it.id) {
         hint_at_pointer(ui, &r, hint);
     }

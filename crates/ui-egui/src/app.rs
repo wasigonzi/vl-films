@@ -529,6 +529,7 @@ impl eframe::App for FilmcraftApp {
             self.suspended_ime_controls(&ctx);
         }
         self.ui_inner(ui, frame);
+        crate::splash::paint(&ctx);
         self.finish_ime_reset_ui(&ctx);
     }
 }

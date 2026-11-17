@@ -1,4 +1,4 @@
-# FilmCraft Roadmap
+# VL Films Roadmap
 
 - M3: Markers and clips share the existing sixteen clip presets plus a project-local custom hex palette. A reusable wheel/hex editor defines colors separately from marker editing; timeline markers expose Edit Marker with Name, Author and Notes. Marker/clip colors, palette edits and authors persist with undo and project saves. AVB marker import remains separate.
 
@@ -9,7 +9,7 @@
 
 > **Last reviewed:** 2026-10-10 · **Last updated:** 2026-11-08 · **Change:** minor (ProRes alpha final-run conformance and native macOS validation; language table: Czech, #1156) · **Target:** Adobe Premiere Pro 2026 (26.5.2)
 
-> **Naming update (2026-11-08):** First-party feature labels now follow the selected ArtCraft naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
+> **Naming update (2026-11-08):** First-party feature labels now follow the selected Visualab Studios naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
 
 Progress toward parity with Adobe Premiere Pro. This page is the summary; the detail is in
 [docs/target-app-parity.md](docs/target-app-parity.md) (assessment, methodology, calibration),
@@ -21,7 +21,7 @@ Progress toward parity with Adobe Premiere Pro. This page is the summary; the de
 | | Value | How |
 |---|---|---|
 | **Feature breadth** | **~86%** | Does each Premiere feature exist? Menus 92% (measured: label diff against Premiere 26.5.2's menu dump), effects / transitions / audio effects 100% (measured by tests), other areas estimated |
-| **Ready for real work** | **~56%** (51–61%) | How close FilmCraft is to replacing Premiere for an editor on real projects: depth, correctness, file compatibility, speed, stability, ecosystem. Estimated depth per area, combined by a [written formula](docs/target-app-parity.md#three-readiness-numbers) |
+| **Ready for real work** | **~56%** (51–61%) | How close VL Films is to replacing Premiere for an editor on real projects: depth, correctness, file compatibility, speed, stability, ecosystem. Estimated depth per area, combined by a [written formula](docs/target-app-parity.md#three-readiness-numbers) |
 | **Mainstream practitioner** | **~55%** | A typical professional editor's weekly work only, discounted ×0.90 interaction, ×0.92 stability, ×0.88 file exchange with Premiere users ([method](docs/target-app-parity.md#mainstream-practitioner)) |
 | **Essentials user** | **~60%** | Import, cut, title, music, export at default settings, discounted ×0.88 launch / stability, ×0.90 discoverability, ×0.95 opening files people send ([method](docs/target-app-parity.md#essentials-user)) |
 | **To beta** | **~400–700 Opus 5.5 agent-hours** | Estimated, calibrated from this repo's PR history |

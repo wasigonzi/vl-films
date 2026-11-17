@@ -1,21 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
-  <title>FilmCraft</title>
+  <meta name="description" content="VL Films: editor de video profesional de Visualab Studios, en tu navegador.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="VL Films">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b0b0c">
+  <title>VL Films</title>
+  <!-- Visualab Studios brand: the same favicon, home-screen icons and install manifest as VL Studios. -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.json">
   <style>
-    html, body { margin: 0; height: 100%; overflow: hidden; background: #1b1c1f; }
-    canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    /* Mobile: no page scroll, bounce or callout; the app takes the gestures. */
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0b0c; overscroll-behavior: none;
+      -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+    /* Visualab Studios loading screen while the app downloads (the app's own splash follows). */
     #loading {
-      position: absolute; inset: 0; display: flex; flex-direction: column; gap: 14px;
-      align-items: center; justify-content: center; color: #c9c9cc;
-      font: 14px/1.4 system-ui, sans-serif; pointer-events: none;
+      position: absolute; inset: 0; display: flex; flex-direction: column; gap: 18px; padding: 0 24px;
+      align-items: center; justify-content: center; text-align: center; color: #b8b8c0;
+      font: 14px/1.4 Inter, system-ui, sans-serif; pointer-events: none;
+      background: radial-gradient(ellipse at 30% 40%, rgba(0,212,255,.14), transparent 55%), radial-gradient(ellipse at 75% 65%, rgba(123,60,255,.14), transparent 55%), #0b0b0c;
     }
-    #loading img { width: 56px; height: 56px; }
-    #loading .err { color: #ff8a7a; white-space: pre-wrap; max-width: 70ch; pointer-events: auto; }
+    #loading img { width: min(260px, 64vw); height: auto; animation: vl-pulse 2.4s ease-in-out infinite; filter: drop-shadow(0 0 18px rgba(0,212,255,.35)); }
+    #loading .vl-name { color: #00d4ff; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; }
+    #loading .vl-bar { width: min(260px, 64vw); height: 3px; border-radius: 2px; background: #26262a; overflow: hidden; }
+    #loading .vl-bar i { display: block; height: 100%; width: 40%; border-radius: 2px; background: #00d4ff; animation: vl-slide 1.4s ease-in-out infinite; }
+    #loading .err { color: #ff8a7a; white-space: pre-wrap; max-width: min(70ch, 92vw); pointer-events: auto; text-align: left; font-size: 12px; }
+    @keyframes vl-pulse { 50% { transform: scale(1.03); filter: drop-shadow(0 0 28px rgba(0,212,255,.55)); } }
+    @keyframes vl-slide { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+    @media (prefers-reduced-motion: reduce) { #loading img, #loading .vl-bar i { animation: none; } }
     #fatal {
       position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
       background: rgba(20, 20, 22, 0.88); color: #e6e6e8; font: 14px/1.45 system-ui, sans-serif; z-index: 10;
@@ -24,18 +44,23 @@
     #fatal .box { max-width: min(78ch, calc(100vw - 32px)); padding: 20px 24px; background: #26272b; border-radius: 8px; }
     #fatal h1 { margin: 0 0 8px; font-size: 17px; color: #ff8a7a; }
     #fatal pre { max-height: 40vh; overflow: auto; white-space: pre-wrap; font-size: 12px; color: #c9c9cc; }
-    #fatal button { font: inherit; padding: 6px 14px; border: 0; border-radius: 6px; background: #3b6fe0; color: #fff; cursor: pointer; }
+    #fatal button { font: inherit; padding: 6px 14px; border: 0; border-radius: 6px; background: #00a3c4; color: #fff; cursor: pointer; }
   </style>
 </head>
 <body>
   <canvas id="filmcraft_canvas"></canvas>
-  <div id="loading"><img src="favicon.png" alt=""><div id="status">Loading FilmCraft…</div></div>
+  <div id="loading">
+    <img src="vl-logo.png" alt="Visualab Studios" width="450" height="144">
+    <div class="vl-name">VL Films</div>
+    <div class="vl-bar"><i></i></div>
+    <div id="status">Cargando VL Films…</div>
+  </div>
   <div id="fatal" role="alertdialog" aria-labelledby="fatal-title">
     <div class="box">
-      <h1 id="fatal-title">FilmCraft stopped working</h1>
-      <div>Unsaved changes are kept in the browser every few seconds and come back when you reload.</div>
+      <h1 id="fatal-title">VL Films dejó de funcionar</h1>
+      <div>Los cambios sin guardar se conservan en el navegador cada pocos segundos y vuelven al recargar.</div>
       <pre id="fatal-msg"></pre>
-      <button id="fatal-reload" type="button">Reload</button>
+      <button id="fatal-reload" type="button">Recargar</button>
     </div>
   </div>
   <script>
@@ -64,9 +89,57 @@
     addEventListener("error", (ev) => { if (window.filmcraftLoad.readyMs && isFatal(ev.error || ev.message)) window.filmcraftFatal(ev.error || ev.message); });
     addEventListener("unhandledrejection", (ev) => { if (window.filmcraftLoad.readyMs && isFatal(ev.reason)) window.filmcraftFatal(ev.reason); });
   </script>
+  <script>
+    // Visualab Studios account gate: only signed-in users open VL Films. The website hands the
+    // Supabase session over in the URL fragment (#access_token=…&refresh_token=…) when it opens the
+    // app; the session is kept in this origin's storage and refreshed when it expires. Without a
+    // valid session the page goes back to VL Films' page on the website to sign in.
+    // `__VL_SUPABASE_URL__` / `__VL_SUPABASE_ANON__` are filled in at deploy time; unfilled (local
+    // builds) the gate is off.
+    window.vlGate = (async () => {
+      const SB = "__VL_SUPABASE_URL__", KEY = "__VL_SUPABASE_ANON__";
+      const SITE = "https://www.visualabstudios.com/vl-tools/vl-films";
+      const STORE = "vl-films-session";
+      if (SB.startsWith("__") || KEY.startsWith("__")) return true;
+      const say = (t) => { const s = document.getElementById("status"); if (s) s.textContent = t; };
+      const leave = () => { say("Inicia sesión en Visualab Studios para usar VL Films…"); location.replace(SITE + "?acceso=1"); return new Promise(() => {}); };
+      const h = new URLSearchParams(location.hash.slice(1));
+      if (h.get("access_token")) {
+        localStorage.setItem(STORE, JSON.stringify({ access_token: h.get("access_token"), refresh_token: h.get("refresh_token") || "" }));
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+      let sess = null;
+      try { sess = JSON.parse(localStorage.getItem(STORE) || "null"); } catch (e) { sess = null; }
+      if (!sess || !sess.access_token) return leave();
+      say("Verificando tu cuenta…");
+      const user = (t) => fetch(SB + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + t } });
+      try {
+        let r = await user(sess.access_token);
+        if (r.status === 401 || r.status === 403) {
+          if (!sess.refresh_token) { localStorage.removeItem(STORE); return leave(); }
+          const t = await fetch(SB + "/auth/v1/token?grant_type=refresh_token", {
+            method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: sess.refresh_token }),
+          });
+          if (!t.ok) { localStorage.removeItem(STORE); return leave(); }
+          const j = await t.json();
+          sess = { access_token: j.access_token, refresh_token: j.refresh_token };
+          localStorage.setItem(STORE, JSON.stringify(sess));
+          r = await user(sess.access_token);
+        }
+        if (!r.ok) { localStorage.removeItem(STORE); return leave(); }
+      } catch (e) {
+        // offline: an earlier verified session may still open the app from the cache
+        if (!navigator.onLine) return true;
+        return leave();
+      }
+      say("Cargando VL Films…");
+      return true;
+    })();
+  </script>
   <script type="module">
     // `__FC_BUILD__` is replaced by `cargo xtask web` with a hash of the build: the glue and the
     // wasm are cached as immutable, so their URLs must change with every build.
+    await window.vlGate;
     const build = "__FC_BUILD__";
     const v = build.startsWith("__") ? "" : "?v=" + build;
     const t0 = performance.now();
@@ -86,10 +159,11 @@
         location.replace(location.pathname + "?" + params.toString().replace(/=(&|$)/g, "$1") + location.hash);
       } else {
         const s = document.getElementById("status");
-        if (s) { s.className = "err"; s.textContent = "FilmCraft failed to start:\n" + text; }
+        if (s) { s.className = "err"; s.textContent = "VL Films no pudo iniciar (se necesita un navegador con WebGPU o WebGL2):\n" + text; }
       }
       throw e;
     }
   </script>
+  <script>if ('serviceWorker' in navigator) addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });</script>
 </body>
 </html>

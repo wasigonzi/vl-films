@@ -31,7 +31,7 @@ use crate::{EngineError, Result, Session};
 
 pub const FILE_FORMAT: &str = "filmcraft.effect-presets";
 const LIBRARY_FILE: &str = "effect-presets.json";
-/// Premiere `.prfpset` (and FilmCraft `.json`) files dropped in this folder are detected and
+/// Premiere `.prfpset` (and VL Films `.json`) files dropped in this folder are detected and
 /// loaded automatically on start-up (and by `presets.scan`).
 pub const LIBRARY_DIR: &str = "Effect Presets";
 const LIBRARY_INDEX: &str = "effect-preset-library.json";
@@ -121,7 +121,7 @@ pub struct ScanReport {
     pub imported: usize,
     /// Library presets removed because their file disappeared or changed.
     pub removed: usize,
-    /// Presets inside those files that FilmCraft cannot apply (third-party plugins).
+    /// Presets inside those files that VL Films cannot apply (third-party plugins).
     pub skipped: usize,
     /// Presets that apply but dropped parameters the built-in effect does not expose.
     pub warnings: usize,
@@ -156,7 +156,7 @@ pub struct PresetLibrary {
 
 impl PresetLibrary {
     /// Persist user presets in `data_dir`, load them, and detect the preset library
-    /// (`<data dir>/Effect Presets`, scanned recursively for `.prfpset` and FilmCraft `.json`).
+    /// (`<data dir>/Effect Presets`, scanned recursively for `.prfpset` and VL Films `.json`).
     pub fn set_dir(&mut self, data_dir: &Path) {
         self.dir = Some(data_dir.to_path_buf());
         let path = data_dir.join(LIBRARY_FILE);
@@ -507,7 +507,7 @@ fn file_bytes(presets: &[EffectPreset]) -> Vec<u8> {
     serde_json::to_vec_pretty(&f).unwrap_or_default()
 }
 
-/// Whether `path` or `bytes` represents an effect preset file (Premiere `.prfpset` XML or FilmCraft JSON).
+/// Whether `path` or `bytes` represents an effect preset file (Premiere `.prfpset` XML or VL Films JSON).
 pub fn is_preset_file(path: &Path, bytes: &[u8]) -> bool {
     if path.extension().and_then(|e| e.to_str()).is_some_and(|e| e.eq_ignore_ascii_case("prfpset")) {
         return true;
@@ -530,7 +530,7 @@ pub fn is_preset_file(path: &Path, bytes: &[u8]) -> bool {
     false
 }
 
-/// Read a preset file, detecting Premiere `.prfpset` XML and FilmCraft JSON by content (the
+/// Read a preset file, detecting Premiere `.prfpset` XML and VL Films JSON by content (the
 /// extension is not trusted). The XML path reports presets it had to skip and parameters the
 /// target effects do not have.
 pub fn parse_file_detailed(bytes: &[u8]) -> std::result::Result<crate::prfpset::PrfpsetImport, String> {
@@ -547,7 +547,7 @@ pub fn parse_file_detailed(bytes: &[u8]) -> std::result::Result<crate::prfpset::
         return crate::prfpset::parse_prfpset(text);
     }
     if !trimmed.starts_with('{') {
-        return Err("not an effect preset file (expected Premiere XML or FilmCraft JSON)".into());
+        return Err("not an effect preset file (expected Premiere XML or VL Films JSON)".into());
     }
     let f: PresetFile = serde_json::from_str(text).map_err(|e| format!("not an effect preset file: {e}"))?;
     if f.format != FILE_FORMAT {
@@ -622,7 +622,7 @@ fn preset(name: &str, description: &str, keyframes: KeyframeMode, secs: f64, eff
     }
 }
 
-/// Presets that ship with FilmCraft (original work: parameter values chosen by us).
+/// Presets that ship with VL Films (original work: parameter values chosen by us).
 pub fn builtin_presets() -> Vec<EffectPreset> {
     let f = ParamValue::Float;
     let mut blur_in = effect("gaussian_blur", &[]);

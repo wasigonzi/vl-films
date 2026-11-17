@@ -152,7 +152,7 @@ pub struct Report {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub extra_files: Vec<String>,
     /// The video encoder that ran: the hardware encoder's name ("NVENC", "VideoToolbox"), or
-    /// "software" for FilmCraft's own. `None` for exports without one (audio, image sequences, GIF).
+    /// "software" for VL Films' own. `None` for exports without one (audio, image sequences, GIF).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub encoder: Option<String>,
     /// What the user should know about how the export ran: hardware encoding asked for, but the

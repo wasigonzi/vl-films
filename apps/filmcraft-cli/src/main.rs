@@ -1,4 +1,4 @@
-//! FilmCraft headless CLI: every engine command is one shell call away, for scripts and AI agents.
+//! VL Films headless CLI: every engine command is one shell call away, for scripts and AI agents.
 //!
 //! Run `filmcraft-cli help` for the full reference (also in docs/agents.md).
 
@@ -62,7 +62,7 @@ fn stdout_failed(e: std::io::Error) {
 }
 
 const HELP: &str = "\
-filmcraft-cli: drive FilmCraft from the shell (headless engine, or the live app with --bridge)
+filmcraft-cli: drive VL Films from the shell (headless engine, or the live app with --bridge)
 
 USAGE
   filmcraft-cli [OPTIONS] <SUBCOMMAND> [ARGS]
@@ -109,7 +109,7 @@ OPTIONS
                                 project take turns, so each edits what the last one saved
   --save-as <p.fcproj>          save the project to this path when done
   --bridge <127.0.0.1:PORT>     send commands to the running app (`filmcraft --control PORT`)
-  --data-dir <dir>              FilmCraft data directory for user export presets (headless;
+  --data-dir <dir>              VL Films data directory for user export presets (headless;
                                 default: the app's data directory)
   --keep-going                  `run`: report failing lines and continue
   --compact                     one-line JSON output

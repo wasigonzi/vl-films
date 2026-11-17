@@ -121,7 +121,7 @@ struct PendingLink {
 }
 
 /// Deepest `bin`/`children`/`project` nesting a hostile file may walk. XML containers can nest
-/// without limit in the file, and the walk recurses once per level (audit: FilmCraft F3).
+/// without limit in the file, and the walk recurses once per level (audit: VL Films F3).
 const MAX_XML_DEPTH: usize = 128;
 
 struct Imp<'a, 'i, 'r> {
@@ -1221,7 +1221,7 @@ impl Exp<'_, '_> {
                 return;
             }
             other => {
-                self.report.info(format!("generator \"{}\" is written with a FilmCraft effect id", other.label()));
+                self.report.info(format!("generator \"{}\" is written with a VL Films effect id", other.label()));
                 self.w.text("name", other.label());
                 self.w.text("effectid", format!("filmcraft:{}", serde_json::to_string(other).unwrap_or_default()));
             }

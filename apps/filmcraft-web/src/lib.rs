@@ -1,4 +1,4 @@
-//! FilmCraft in the browser.
+//! VL Films in the browser.
 //!
 //! The same engine and egui UI as the desktop app, compiled to `wasm32-unknown-unknown` and run
 //! by eframe's web runner on WebGPU (WebGL2 fallback). What the desktop shell gets from the OS,
@@ -84,7 +84,7 @@ pub fn info() -> serde_json::Value {
     INFO.with(|i| i.borrow().clone())
 }
 
-/// The eframe app: the shared FilmCraft UI plus the web host's per-frame duties.
+/// The eframe app: the shared VL Films UI plus the web host's per-frame duties.
 pub struct WebApp {
     pub app: FilmcraftApp,
     pub audio: Option<audio::Handle>,
@@ -140,10 +140,10 @@ pub async fn start(canvas_id: String) -> Result<(), JsValue> {
     let doc = web_sys::window().and_then(|w| w.document()).ok_or("no document")?;
     let canvas: web_sys::HtmlCanvasElement = doc.get_element_by_id(&canvas_id).ok_or("no canvas")?.dyn_into()?;
 
-    // Host modes (`craft-web-host`): `?host=parent`, a same-origin page framing FilmCraft in an
+    // Host modes (`craft-web-host`): `?host=parent`, a same-origin page framing VL Films in an
     // `<iframe>`, opens files in it and stores what it saves (`host`); unframed there is no parent,
     // so that URL on its own stays the normal app with downloads. `data-host="page"` on the canvas
-    // opts a page in instead: it runs FilmCraft in its own document and talks over DOM
+    // opts a page in instead: it runs VL Films in its own document and talks over DOM
     // `CustomEvent`s on the canvas. In host mode the host sends the document to edit, so no demo
     // project opens and nothing from an earlier visit is recovered.
     let host = host::Bridge::connect(&canvas);
@@ -182,6 +182,9 @@ pub async fn start(canvas_id: String) -> Result<(), JsValue> {
             web_options,
             Box::new(move |cc| {
                 filmcraft_ui_egui::install_ime_reset_callbacks(&cc.egui_ctx);
+                if !query_flag("nosplash") && !in_host_mode {
+                    filmcraft_ui_egui::splash::enable(&cc.egui_ctx);
+                }
                 set_context(cc.egui_ctx.clone());
                 let ctx = cc.egui_ctx.clone();
                 fs::set_on_data(move || ctx.request_repaint());

@@ -1,5 +1,5 @@
 //! Range-backed WAV source. RIFF parsing and PCM conversion use `craft_audio::wav_range`;
-//! FilmCraft maps its metadata and resamples the requested audio into the project timeline.
+//! VL Films maps its metadata and resamples the requested audio into the project timeline.
 
 use std::sync::Arc;
 

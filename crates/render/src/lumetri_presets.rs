@@ -1,7 +1,7 @@
 //! Color Grading Presets (Effects panel ▸ Color Grading Presets): built-in Color Grading looks, and their
 //! thumbnails rendered by our own Color Grading on a generated preview picture.
 //!
-//! The presets are original work: parameter values chosen by FilmCraft contributors, named
+//! The presets are original work: parameter values chosen by VL Films contributors, named
 //! descriptively (no third-party look names, LUTs or preview images). The preview picture
 //! ([`preview_image`]) is procedural: a dusk sky with a sun, mountain ridges, a lake with its
 //! reflection, a grey ramp down the left edge and six colour chips along the bottom, so a
