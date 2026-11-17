@@ -100,10 +100,7 @@ pub fn paint(ctx: &egui::Context) -> bool {
     ];
     for (bi, (col, bx, by, br, ph)) in blobs.iter().enumerate() {
         let sp = 0.18 + bi as f32 * 0.04;
-        let c = pos2(
-            art.left() + (bx + 0.12 * (tf * sp + ph).sin()) * art.width(),
-            art.top() + (by + 0.16 * (tf * sp * 1.3 + ph * 0.7).cos()) * art.height(),
-        );
+        let c = pos2(art.left() + (bx + 0.12 * (tf * sp + ph).sin()) * art.width(), art.top() + (by + 0.16 * (tf * sp * 1.3 + ph * 0.7).cos()) * art.height());
         let base = br * art.height();
         for layer in 0..14 {
             let k = layer as f32 / 13.0;
@@ -191,11 +188,7 @@ pub fn paint(ctx: &egui::Context) -> bool {
     let sh = painter.with_clip_rect(fill);
     for k in 0..10 {
         let o = 1.0 - (k as f32 / 10.0);
-        sh.rect_filled(
-            Rect::from_center_size(pos2(shx, bar.center().y), vec2(4.0 + k as f32 * 6.0, 3.0)),
-            1.5,
-            a(Color32::from_white_alpha((o * 22.0) as u8)),
-        );
+        sh.rect_filled(Rect::from_center_size(pos2(shx, bar.center().y), vec2(4.0 + k as f32 * 6.0, 3.0)), 1.5, a(Color32::from_white_alpha((o * 22.0) as u8)));
     }
     ctx.request_repaint();
     if t < HOLD {

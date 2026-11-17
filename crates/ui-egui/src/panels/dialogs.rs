@@ -504,5 +504,11 @@ fn about_tab(app: &mut FilmcraftApp, ui: &mut egui::Ui) {
     link(ui, "website", Icon::Globe, "visualabstudios.com", links::WEBSITE, false);
     link(ui, "appPage", Icon::Globe, tl!("VL Films on visualabstudios.com"), links::APP_PAGE, false);
     ui.add_space(10.0);
-    ui.label(egui::RichText::new(tl!("By Visualab Studios. Based on open-source software (MIT OR Apache-2.0). Fonts: Inter, Noto Serif and JetBrains Mono (SIL OFL 1.1).")).small().color(t.text_dim));
+    ui.label(
+        egui::RichText::new(tl!(
+            "By Visualab Studios. Based on open-source software (MIT OR Apache-2.0). Fonts: Inter, Noto Serif and JetBrains Mono (SIL OFL 1.1)."
+        ))
+        .small()
+        .color(t.text_dim),
+    );
 }
