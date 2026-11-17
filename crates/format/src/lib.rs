@@ -356,7 +356,7 @@ mod tests {
         v["schema_version"] = Value::from(SCHEMA_VERSION + 1);
         let e = decode(&serde_json::to_vec(&v).unwrap()).unwrap_err();
         assert!(matches!(e, FormatError::TooNew { .. }));
-        assert!(e.to_string().contains("newer version of VL Films"), "{e}");
+        assert!(e.to_string().contains("newer version of FilmCraft"), "{e}");
     }
 
     #[test]

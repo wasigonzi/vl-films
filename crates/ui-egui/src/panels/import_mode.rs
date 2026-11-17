@@ -51,7 +51,7 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
     let tx = logo.map_or(rect.min.x + 24.0, |r| r.max.x + 12.0);
     ui.painter().text(pos2(tx, rect.min.y + y), Align2::LEFT_CENTER, tl!("Community"), Tokens::semibold(15.0), t.text);
     let mut x = rect.min.x + 24.0;
-    for (i, (id, label, url)) in crate::links::ALL.iter().take(4).enumerate() {
+    for (i, (id, label, url)) in crate::links::ALL.iter().enumerate() {
         let primary = i == 0;
         let label = if primary { tl!("Visit Visualab Studios") } else { crate::i18n::t(label) };
         let g = ui.painter().layout_no_wrap(label.to_string(), Tokens::ui(13.0), t.text);
