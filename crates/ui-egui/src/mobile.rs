@@ -242,7 +242,7 @@ pub(crate) fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, full: Rect, form: 
     let mut bodies = Vec::new();
     match app.ui.mode {
         Mode::Import => panels::import_mode::show(app, ui, body),
-        Mode::Export => panels::export_mode::show(app, ui, body),
+        Mode::Export => export(app, ui, body, form, &mut shell),
         Mode::Edit => match form {
             Form::Tablet => tablet(app, ui, body, &mut shell, &mut bodies),
             _ => phone(app, ui, body, &mut shell, &mut bodies),
@@ -361,19 +361,31 @@ fn tab_bar(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, form: Form, sh
 
 /// A segmented control over the panels of `tab`, `rect` tall [`SEGMENTS_H`]; returns the panel shown.
 fn segments(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, tab: Tab, shell: &mut Shell) -> PanelKind {
-    let t = app.tokens;
     let panels = tab.panels();
+    let labels: Vec<(String, &str)> = panels.iter().map(|p| (format!("mobile.panel.{}", p.id()), crate::i18n::t(p.title()))).collect();
     let chosen = (shell.sub[tab.index()] as usize).min(panels.len().saturating_sub(1));
+    let picked = segmented(app, ui, rect, &labels, chosen);
+    if picked != chosen {
+        shell.sub[tab.index()] = picked as u8;
+        app.ui.focused = panels[picked];
+    }
+    panels[picked]
+}
+
+/// A row of equal segments (automation id, label), the chosen one lit; returns the one chosen after a tap.
+fn segmented(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, labels: &[(String, &str)], chosen: usize) -> usize {
+    let t = app.tokens;
     let p = ui.painter().clone();
     p.rect_filled(rect, 0.0, t.tab_bg);
     let inner = rect.shrink2(vec2(8.0, 5.0));
     p.rect_filled(inner, 8.0, t.field_bg);
-    let w = inner.width() / panels.len() as f32;
-    for (i, panel) in panels.iter().copied().enumerate() {
+    let w = inner.width() / labels.len().max(1) as f32;
+    let mut picked = chosen;
+    for (i, (id, label)) in labels.iter().enumerate() {
         let cell = Rect::from_min_size(pos2(inner.min.x + i as f32 * w, inner.min.y), vec2(w, inner.height()));
-        let label = crate::i18n::t(panel.title());
-        let resp = ui.interact(cell, egui::Id::unique(("vl-segment", tab.index(), i)), Sense::click());
-        app.auto.add(&format!("mobile.panel.{}", panel.id()), cell, label);
+        let resp = ui.interact(cell, egui::Id::unique(("vl-segment", id.as_str())), Sense::click());
+        resp.widget_info(|| egui::WidgetInfo::selected(egui::Role::Button, true, i == chosen, *label));
+        app.auto.add(id, cell, label);
         let active = i == chosen;
         if active {
             p.rect_filled(cell.shrink(2.0), 6.0, t.pill_active_bg);
@@ -382,11 +394,36 @@ fn segments(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, tab: Tab, she
         let g = fitted(&p, label, 13.0, w - 10.0, color);
         p.galley(cell.center() - g.size() / 2.0, g, color);
         if resp.clicked() {
-            shell.sub[tab.index()] = i as u8;
-            app.ui.focused = panel;
+            picked = i;
         }
     }
-    panels[chosen]
+    picked
+}
+
+/// Export one column at a time on a phone; the settings beside the preview (or the destinations)
+/// on a tablet.
+fn export(app: &mut FilmcraftApp, ui: &mut egui::Ui, body: Rect, form: Form, shell: &mut Shell) {
+    use panels::export_mode::Part;
+    let all = [(Part::Preview, tl!("Preview")), (Part::Settings, tl!("Settings")), (Part::Destinations, tl!("Destinations"))];
+    let sub = &mut shell.sub[Tab::Export.index()];
+    let (left, right, parts): (Option<Rect>, Rect, Vec<(Part, &str)>) = if form == Form::Tablet {
+        let x = body.min.x + (body.width() * 0.55).round();
+        (Some(Rect::from_min_max(body.min, pos2(x, body.max.y))), Rect::from_min_max(pos2(x + 1.0, body.min.y), body.max), vec![all[0], all[2]])
+    } else {
+        (None, body, all.to_vec())
+    };
+    if let Some(left) = left {
+        panels::export_mode::show_part(app, ui, left, Part::Settings);
+    }
+    let labels: Vec<(String, &str)> = parts.iter().map(|(part, label)| (format!("mobile.export.{part:?}"), *label)).collect();
+    let chosen = (*sub as usize).min(parts.len() - 1);
+    let seg = Rect::from_min_size(right.min, vec2(right.width(), SEGMENTS_H));
+    let picked = segmented(app, ui, seg, &labels, chosen);
+    shell.sub[Tab::Export.index()] = picked as u8;
+    let rest = Rect::from_min_max(pos2(right.min.x, seg.max.y), right.max);
+    let mut child = ui.new_child(egui::UiBuilder::new().max_rect(rest).id_salt(("mobile-export", picked)));
+    child.set_clip_rect(rest.intersect(ui.clip_rect()));
+    panels::export_mode::show_part(app, &mut child, rest, parts[picked].0);
 }
 
 /// One panel body in `rect`, as the dock area draws it: tapping it gives it the focus.
@@ -420,7 +457,7 @@ fn timeline(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, bodies: &mut 
     // On a phone the track headers give up some width to the clips: the name column narrows
     // (the patch, lock and target buttons stay), unless the user drags the column wider here.
     let saved = app.ui.timeline.header_w;
-    let narrow = (line.width() * 0.34).clamp(116.0, 204.0);
+    let narrow = (line.width() * 0.36).clamp(140.0, 204.0);
     if saved > narrow {
         app.ui.timeline.header_w = narrow;
     }

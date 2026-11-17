@@ -219,8 +219,43 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
     queue_column(app, ui, left);
     settings_column(app, ui, mid);
     preview_column(app, ui, right, seq_id);
+    finish(app, ui, &before);
+}
+
+/// One of Export's three columns, for phones and tablets that show them one at a time.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Part {
+    Settings,
+    Preview,
+    Destinations,
+}
+
+/// Export mode with only `part` shown, filling `rect` (phones and tablets).
+pub fn show_part(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, part: Part) {
+    let t = app.tokens;
+    ui.painter().rect_filled(rect, t.radius, t.panel_bg);
+    let Some(seq_id) = app.session.state.active_sequence else {
+        if part == Part::Destinations {
+            queue_column(app, ui, rect);
+        } else {
+            crate::dock::placeholder(ui, rect, &t, tl!("Open a sequence to export"));
+        }
+        return;
+    };
+    sync_sequence(app);
+    let before = settings_json(&app.ui.export.settings);
+    match part {
+        Part::Settings => settings_column(app, ui, rect),
+        Part::Preview => preview_column(app, ui, rect, seq_id),
+        Part::Destinations => queue_column(app, ui, rect),
+    }
+    finish(app, ui, &before);
+}
+
+/// After the columns: the preset follows edits, the preset manager, and repaints while exporting.
+fn finish(app: &mut FilmcraftApp, ui: &mut egui::Ui, before: &serde_json::Value) {
     // editing any setting turns the preset into "Custom"
-    if settings_json(&app.ui.export.settings) != before
+    if settings_json(&app.ui.export.settings) != *before
         && app.ui.export.preset != CUSTOM
         && app.session.export_presets.find(&app.ui.export.preset).is_none_or(|p| settings_json(&p.settings) != settings_json(&app.ui.export.settings))
     {
