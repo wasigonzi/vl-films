@@ -97,7 +97,9 @@
     // `__VL_SUPABASE_URL__` / `__VL_SUPABASE_ANON__` are filled in at deploy time; unfilled (local
     // builds) the gate is off.
     window.vlGate = (async () => {
-      const SB = "__VL_SUPABASE_URL__", KEY = "__VL_SUPABASE_ANON__";
+      const clean = (v) => v.trim().replace(/^[A-Z0-9_]+=/, "").replace(/^["']|["']$/g, "");
+      // A deploy that pastes whole .env lines (NAME=value) or quoted values still works.
+      const SB = clean("__VL_SUPABASE_URL__").replace(/\/+$/, ""), KEY = clean("__VL_SUPABASE_ANON__");
       const SITE = "https://www.visualabstudios.com/vl-tools/vl-films";
       const STORE = "vl-films-session";
       if (SB.startsWith("__") || KEY.startsWith("__")) return true;
