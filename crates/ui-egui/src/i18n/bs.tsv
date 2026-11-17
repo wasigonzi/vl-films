@@ -31,7 +31,6 @@
 	Apply Default Transitions to Selection	Primijeni zadane prijelaze na odabir
 	Apply Video Transition	Primijeni video prijelaz
 	Arrange	Rasporedi
-	ArtCraft Website	Web stranica ArtCrafta
 	Assembly	Sklapanje
 	Attach Proxies…	Priloži proksije…
 	Audio	Zvuk
@@ -128,8 +127,6 @@
 	File…	Datoteka…
 	Fill frame	Ispuni kadar
 	VL Films Help…	Pomoć za VL Films…
-	VL Films on GitHub	VL Films na GitHubu
-	VL Films on getartcraft.com	VL Films na getartcraft.com
 	Find Next	Pronađi sljedeće
 	Find…	Pronađi…
 	Fit	Uklopi
@@ -173,7 +170,6 @@
 	Insert Frame Hold Segment	Umetni segment zadržavanja sličice
 	Install Motion Graphics Template…	Instaliraj predložak animirane grafike…
 	Interpret Footage…	Interpretiraj snimak…
-	Join the ArtCraft Discord…	Pridružite se ArtCraft Discordu…
 	Keyboard Shortcuts…	Prečice na tastaturi…
 	Label	Oznaka
 	Labels…	Oznake…
@@ -264,7 +260,6 @@
 	Render Selection	Iscrtaj odabir
 	Replace Fonts in Projects…	Zamijeni fontove u projektima…
 	Replace With Clip	Zamijeni klipom
-	Report an Issue…	Prijavi problem…
 	Reset All Parameters	Vrati sve parametre na početno
 	Reset Duration	Vrati trajanje na početno
 	Reset to Saved Layout	Vrati na sačuvani raspored
@@ -394,7 +389,6 @@
 	Master volume: use the Audio Track Mixer	Glavna jačina: koristite mikser audio traka
 	Search	Pretraga
 	Quick Export	Brzi izvoz
-	Join the ArtCraft Discord (discord.gg/artcraft)	Pridružite se ArtCraft Discordu (discord.gg/artcraft)
 	Cancel	Otkaži
 	OK	U redu
 	Interpret Footage	Interpretiraj snimak
@@ -437,11 +431,6 @@
 	Delete Caption Track	Izbriši traku titlova
 	Delete Empty Caption Tracks	Izbriši prazne trake titlova
 	Version {version}	Verzija {version}
-	A clean-room, pure-Rust non-linear video editor. Part of the ArtCraft family.	Nelinearni video uređivač u čistom Rustu, napisan od nule. Dio porodice ArtCraft.
-	Join the ArtCraft Discord	Pridružite se ArtCraft Discordu
-	Source code on GitHub	Izvorni kod na GitHubu
-	Report an issue	Prijavi problem
-	MIT OR Apache-2.0. Fonts: Inter, Noto Serif and JetBrains Mono (SIL OFL 1.1).	MIT OR Apache-2.0. Fontovi: Inter, Noto Serif i JetBrains Mono (SIL OFL 1.1).
 	just now	upravo sada
 	{n} s ago	prije {n} s
 	{n} min ago	prije {n} min
@@ -479,7 +468,6 @@
 	Bars and Tone	Trake i ton
 	SMPTE HD bars with 1 kHz reference tone	SMPTE HD trake s referentnim tonom 1 kHz
 	Community	Zajednica
-	Join us on Discord	Pridružite nam se na Discordu
 	OMF Export Settings	Postavke izvoza OMF
 	AAF Export Settings	Postavke izvoza AAF
 	OMF Title:	OMF naslov:

@@ -2,7 +2,7 @@
 
 > **Last reviewed:** 2026-10-12 · **Last updated:** 2026-11-08 · **Change:** minor (G14 catalog counts refreshed; G13 GIF binary transparency retained) · **Target:** Adobe Premiere Pro 2026 (26.5.2)
 
-> **Naming update (2026-11-08):** First-party feature labels now follow the selected ArtCraft naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
+> **Naming update (2026-11-08):** First-party feature labels now follow the selected Visualab Studios naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
 
 Every known shortfall, one entry each, ranked by what most stops an editor using VL Films for real
 work. This is the work list: agents should prefer it over adding checklist items. Numbers are in

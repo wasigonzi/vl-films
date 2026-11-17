@@ -1,6 +1,6 @@
 # Hosting VL Films for the web
 
-`filmcraft-web-<version>.zip` (from the GitHub release, or `packaging/web/package.sh`) holds a
+`filmcraft-web-<version>.zip` (from a release, or `packaging/web/package.sh`) holds a
 static site in `filmcraft-web-<version>/`:
 
 | File | What it is |

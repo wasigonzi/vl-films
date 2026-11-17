@@ -307,7 +307,7 @@ All fourteen capture consumers adopt this contract. The eleven apps that already
 PhotoCraft, SoundCraft, VectorCraft and WordCraft) import the helper from the published
 revision that contains both CL-1 and CL-2F in the same atomic dependency stage. DesignCraft
 and GridCraft are the pilot adapters against the reviewed CL-2 provisional revision before
-CL-2F freezes the API. DeckCraft, FigCraft and ArtCraft Native do not declare `craft-ui`;
+CL-2F freezes the API. DeckCraft, FigCraft and Visualab Studios Native do not declare `craft-ui`;
 they use contract-compatible local adapters unless they choose to add the dependency. Any
 consumer that already carries an incompatible `craft-ui` bump must reconcile it in that same
 atomic dependency stage, not a separate registry-only state. The earlier "thirteen `craft-ui`

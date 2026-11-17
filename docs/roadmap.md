@@ -2,7 +2,7 @@
 
 > **Last reviewed:** 2026-10-12 · **Last updated:** 2026-11-08 · **Change:** minor (M8: Fujifilm F-Log / F-Log2 / F-Log2 C colour spaces; E-AC-3 #788, AVI #650, Russian #610, French #804, Indonesian #878, pt-BR #866 and German #630 no longer listed as open) · **Target:** Adobe Premiere Pro 2026 (26.5.2)
 
-> **Naming update (2026-11-08):** First-party feature labels now follow the selected ArtCraft naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
+> **Naming update (2026-11-08):** First-party feature labels now follow the selected Visualab Studios naming scheme in [PR #1880](https://github.com/storytold/filmcraft/pull/1880). Capabilities, estimates and parity scores were not re-measured.
 
 Forward-looking plan: milestones with status, the current focus and what's next, with estimates in
 Opus 5.5 agent-hours (calibration in [target-app-parity.md](target-app-parity.md#calibration)).

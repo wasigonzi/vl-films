@@ -10,7 +10,7 @@
 # Swedish video-editing vocabulary (spår, spelmarkör, sekvens, bin, snitt, nyckelbildruta,
 # undertext, rendera…). No proprietary localisation resource, string table or product UI was
 # consulted or copied, and no other VL Films catalog was translated from; add entries the same
-# way. Product, technology and format names (VL Films, ArtCraft, ProRes, LUFS, H.264…)
+# way. Product, technology and format names (VL Films, Visualab Studios, ProRes, LUFS, H.264…)
 # keep their spelling, as do key-cap names (Shift, Alt, Ctrl, Cmd, Opt, Esc).
 # Labels use sentence case; commands are imperatives; Delete = Radera, Remove = Ta bort,
 # Clear = Rensa; decimals use a comma and frame rates are written bild/s (29,97 bild/s).
@@ -41,7 +41,6 @@
 	Apply Default Transitions to Selection	Använd standardövergångar på markering
 	Apply Video Transition	Använd videoövergång
 	Arrange	Ordna
-	ArtCraft Website	ArtCrafts webbplats
 	Assembly	Sammanställning
 	Attach Proxies…	Koppla proxyer…
 	Audio Channels…	Ljudkanaler…
@@ -135,8 +134,6 @@
 	File…	Fil…
 	Fill frame	Fyll bildrutan
 	VL Films Help…	VL Films-hjälp…
-	VL Films on GitHub	VL Films på GitHub
-	VL Films on getartcraft.com	VL Films på getartcraft.com
 	Find Next	Sök nästa
 	Find…	Sök…
 	Fit	Anpassa
@@ -180,7 +177,6 @@
 	Insert Frame Hold Segment	Infoga frysbildssegment
 	Install Motion Graphics Template…	Installera rörlig grafik-mall…
 	Interpret Footage…	Tolka material…
-	Join the ArtCraft Discord…	Gå med i ArtCraft på Discord…
 	Keyboard Shortcuts…	Kortkommandon…
 	Label	Etikett
 	Labels…	Etiketter…
@@ -274,7 +270,6 @@
 	Render Selection	Rendera markering
 	Replace Fonts in Projects…	Ersätt typsnitt i projekt…
 	Replace With Clip	Ersätt med klipp
-	Report an Issue…	Rapportera ett problem…
 	Reset All Parameters	Återställ alla parametrar
 	Reset Duration	Återställ längd
 	Reset to Saved Layout	Återställ till sparad layout
@@ -375,7 +370,6 @@
 	Master volume: use the Audio Track Mixer	Huvudvolym: använd ljudspårsmixern
 	Search	Sök
 	Quick Export	Snabbexport
-	Join the ArtCraft Discord (discord.gg/artcraft)	Gå med i ArtCraft på Discord (discord.gg/artcraft)
 	Cancel	Avbryt
 	OK	OK
 	Interpret Footage	Tolka material
@@ -418,11 +412,6 @@
 	Delete Caption Track	Radera undertextspåret
 	Delete Empty Caption Tracks	Radera tomma undertextspår
 	Version {version}	Version {version}
-	A clean-room, pure-Rust non-linear video editor. Part of the ArtCraft family.	En icke-linjär videoredigerare i ren Rust, utvecklad enligt clean room-metoden. En del av ArtCraft-familjen.
-	Join the ArtCraft Discord	Gå med i ArtCraft på Discord
-	Source code on GitHub	Källkod på GitHub
-	Report an issue	Rapportera ett problem
-	MIT OR Apache-2.0. Fonts: Inter, Noto Serif and JetBrains Mono (SIL OFL 1.1).	MIT OR Apache-2.0. Typsnitt: Inter, Noto Serif och JetBrains Mono (SIL OFL 1.1).
 	just now	nyss
 	{n} s ago	för {n} s sedan
 	{n} min ago	för {n} min sedan
@@ -460,7 +449,6 @@
 	Bars and Tone	Färgstaplar och ton
 	SMPTE HD bars with 1 kHz reference tone	SMPTE HD-färgstaplar med 1 kHz referenston
 	Community	Gemenskap
-	Join us on Discord	Gå med oss på Discord
 	OMF Export Settings	OMF-exportinställningar
 	AAF Export Settings	AAF-exportinställningar
 	OMF Title:	OMF-titel:
