@@ -59,6 +59,17 @@ impl FilmcraftApp {
             ui.ctx().set_cursor_icon(egui::CursorIcon::None);
             return;
         }
+        // Phones and tablets (the web app below the desktop breakpoint): their own layout.
+        let form = crate::mobile::Form::current(&ctx);
+        crate::mobile::apply_touch_style(&ctx, form);
+        if form.is_touch() {
+            crate::mobile::show(self, ui, full, form);
+            self.pending_timeline_drop = None;
+            panels::dialogs::show(self, &ctx);
+            panels::file_dialogs::show_overwrite(self, &ctx);
+            updates_ui::show(self, &ctx);
+            return;
+        }
         let header_h = if self.ui.show_header { header::HEIGHT } else { 0.0 };
         let header = egui::Rect::from_min_size(full.min, egui::vec2(full.width(), header_h));
         if self.ui.show_header {

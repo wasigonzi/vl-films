@@ -60,6 +60,7 @@ pub mod icons;
 mod ime_reset;
 pub mod links;
 pub mod menus;
+pub mod mobile;
 pub mod native_dialogs;
 pub mod panels;
 pub mod perf;

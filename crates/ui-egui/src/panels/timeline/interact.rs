@@ -224,6 +224,13 @@ pub(crate) fn wheel_input(ctx: &egui::Context) -> WheelInput {
                 _ => {}
             }
         }
+        // two fingers on a touch screen (phones and tablets) pinch like a trackpad
+        if let Some(touch) = i.multi_touch()
+            && touch.zoom_delta.is_finite()
+            && touch.zoom_delta > 0.0
+        {
+            w.pinch *= touch.zoom_delta;
+        }
         w
     })
 }

@@ -1257,6 +1257,57 @@ pub fn menu_bar(app: &mut FilmcraftApp, ui: &mut egui::Ui) {
     }
 }
 
+/// The menu bar as one scrolling list, for the menu drawer of phones and tablets: each menu and
+/// submenu opens in place (no side flyouts that would leave a narrow screen) and every row is a
+/// full-width touch target. Window ▸ Workspaces is left out: phones and tablets have one fixed
+/// arrangement. Returns the command chosen, for the caller to run.
+pub(crate) fn menu_sheet(app: &mut FilmcraftApp, ui: &mut egui::Ui) -> Option<String> {
+    ui.ctx().data_mut(|d| d.insert_temp(egui::Id::unique("interface-language"), app.ui.language));
+    let items: Vec<MenuItem> = menu_items_with_focus(app, ui.ctx()).into_iter().filter(|i| i.path.get(1).map(String::as_str) != Some("Workspaces")).collect();
+    let labels = app.session.prefs.labels.clone();
+    let mut clicked: Option<String> = None;
+    for top in MENUS {
+        let mine: Vec<&MenuItem> = items.iter().filter(|i| i.path.first().map(String::as_str) == Some(top)).collect();
+        if mine.is_empty() {
+            continue;
+        }
+        let r = egui::CollapsingHeader::new(egui::RichText::new(app.ui.language.tr(top)).strong()).id_salt(("menu-sheet", top)).show(ui, |ui| {
+            sheet_level(ui, &mine, 1, &mut clicked, &mut app.auto, &labels);
+        });
+        app.auto.add(&format!("menu.sheet.{top}"), r.header_response.rect, top);
+    }
+    clicked
+}
+
+/// One level of [`menu_sheet`]: submenus as headers that open below, commands as rows.
+fn sheet_level(
+    ui: &mut egui::Ui,
+    items: &[&MenuItem],
+    depth: usize,
+    clicked: &mut Option<String>,
+    auto: &mut crate::automation::Registry,
+    labels: &filmcraft_engine::settings::LabelPrefs,
+) {
+    let language = ui.ctx().data(|d| d.get_temp::<crate::i18n::Language>(egui::Id::unique("interface-language"))).unwrap_or_default();
+    ui.with_layout(egui::Layout::top_down_justified(egui::Align::Min), |ui| {
+        let mut subs: Vec<&str> = Vec::new();
+        for it in items {
+            if let Some(sub) = it.path.get(depth).map(String::as_str) {
+                if subs.contains(&sub) {
+                    continue;
+                }
+                subs.push(sub);
+                let inner: Vec<&MenuItem> = items.iter().copied().filter(|x| x.path.get(depth).map(String::as_str) == Some(sub)).collect();
+                egui::CollapsingHeader::new(language.tr(sub)).id_salt(("menu-sheet", depth, it.path[..=depth].join("/"))).show(ui, |ui| {
+                    sheet_level(ui, &inner, depth + 1, clicked, auto, labels);
+                });
+            } else if menu_entry(ui, it, auto, labels) {
+                *clicked = Some(it.id.clone());
+            }
+        }
+    });
+}
+
 /// Like a native menu bar (Windows, macOS): while one top-level menu is open, hovering another
 /// top-level title opens that menu instead (#1500). egui's `MenuBar` only switches on click.
 fn switch_on_hover(ctx: &egui::Context, titles: &[egui::Response]) {
