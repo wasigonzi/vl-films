@@ -420,39 +420,9 @@ fn delete_tracks(app: &mut FilmcraftApp, ctx: &egui::Context) -> bool {
     keep
 }
 
-/// Help ▸ About VL Films, in three tabs: About (version and the Visualab Studios links),
-/// Contributors and Models (the credits compiled in from `contributors/contributors.json`, see
-/// `crate::credits` and docs/contributors.md).
-///
-/// Automation ids: `about.tab.about`, `about.tab.contributors`, `about.tab.models`; the About tab's
-/// links and the credits controls are listed on [`about_tab`] and [`crate::credits::contributors_ui`].
+/// Help ▸ About VL Films: version, licence and the Visualab Studios links (see [`about_tab`]).
 fn about(app: &mut FilmcraftApp, ui: &mut egui::Ui) {
-    let tab_id = egui::Id::unique("about_tab");
-    let mut tab = ui.data_mut(|d| d.get_temp::<u8>(tab_id)).unwrap_or(0);
-    ui.horizontal(|ui| {
-        for (i, (id, label)) in [("about", tl!("About")), ("contributors", tl!("Contributors")), ("models", tl!("Models"))].into_iter().enumerate() {
-            let i = i as u8;
-            let r = ui.selectable_label(tab == i, label);
-            app.auto.add(&format!("about.tab.{id}"), r.rect, label);
-            if r.clicked() {
-                tab = i;
-            }
-        }
-    });
-    ui.data_mut(|d| d.insert_temp(tab_id, tab));
-    ui.separator();
-    let t = app.tokens;
-    match tab {
-        1 => {
-            ui.set_width(820.0);
-            crate::credits::contributors_ui(ui, &t, &mut app.auto);
-        }
-        2 => {
-            ui.set_width(820.0);
-            crate::credits::models_ui(ui);
-        }
-        _ => about_tab(app, ui),
-    }
+    about_tab(app, ui);
 }
 
 /// About ▸ About: version, licence and the Visualab Studios links. Visiting Visualab Studios is the

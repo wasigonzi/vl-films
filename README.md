@@ -20,11 +20,9 @@ y [`packaging/`](packaging/).
 
 ## Licencia
 
-VL Films se basa en software de código abierto:
-Copyright (c) 2026 ArtCraft Team and the FilmCraft contributors. Licensed under the MIT License or
-the Apache License, Version 2.0, at your option ([LICENSE-MIT](LICENSE-MIT),
-[LICENSE-APACHE](LICENSE-APACHE)). Los avisos requeridos están en [NOTICE](NOTICE) y el material
-de terceros en [ATTRIBUTION.md](ATTRIBUTION.md).
+MIT OR Apache-2.0. Los términos de la licencia, los avisos de copyright requeridos y el material de
+terceros están en [LICENSE-MIT](LICENSE-MIT), [LICENSE-APACHE](LICENSE-APACHE), [NOTICE](NOTICE) y
+[ATTRIBUTION.md](ATTRIBUTION.md).
 
 El nombre y los logotipos de Visualab Studios son marcas de Visualab Studios y no están cubiertos
 por la licencia anterior.
