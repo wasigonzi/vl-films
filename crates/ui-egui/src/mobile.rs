@@ -340,7 +340,13 @@ fn tab_bar(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, form: Form, sh
         resp.widget_info(|| egui::WidgetInfo::selected(egui::Role::Button, true, shell.tab == tab, label));
         app.auto.add(&format!("mobile.tab.{tab:?}"), cell, label);
         let active = shell.tab == tab && shell.extra.is_none();
-        let color = if active { t.accent } else if resp.hovered() { t.text } else { t.text_dim };
+        let color = if active {
+            t.accent
+        } else if resp.hovered() {
+            t.text
+        } else {
+            t.text_dim
+        };
         if active {
             p.rect_filled(Rect::from_center_size(pos2(cell.center().x, cell.min.y + 2.0), vec2((w * 0.5).min(48.0), 3.0)), 1.5, t.accent);
         }

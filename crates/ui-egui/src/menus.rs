@@ -1263,8 +1263,7 @@ pub fn menu_bar(app: &mut FilmcraftApp, ui: &mut egui::Ui) {
 /// arrangement. Returns the command chosen, for the caller to run.
 pub(crate) fn menu_sheet(app: &mut FilmcraftApp, ui: &mut egui::Ui) -> Option<String> {
     ui.ctx().data_mut(|d| d.insert_temp(egui::Id::unique("interface-language"), app.ui.language));
-    let items: Vec<MenuItem> =
-        menu_items_with_focus(app, ui.ctx()).into_iter().filter(|i| i.path.get(1).map(String::as_str) != Some("Workspaces")).collect();
+    let items: Vec<MenuItem> = menu_items_with_focus(app, ui.ctx()).into_iter().filter(|i| i.path.get(1).map(String::as_str) != Some("Workspaces")).collect();
     let labels = app.session.prefs.labels.clone();
     let mut clicked: Option<String> = None;
     for top in MENUS {

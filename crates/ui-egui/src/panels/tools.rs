@@ -105,7 +105,12 @@ pub fn show_sized(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, size: f
         } else if resp.hovered() {
             ui.painter().rect_filled(r, 4.0, t.hover);
         }
-        icons::paint(ui.painter(), Rect::from_center_size(r.center(), vec2(17.0, 17.0) * scale.sqrt()), current.icon(), if active { egui::Color32::WHITE } else { t.icon });
+        icons::paint(
+            ui.painter(),
+            Rect::from_center_size(r.center(), vec2(17.0, 17.0) * scale.sqrt()),
+            current.icon(),
+            if active { egui::Color32::WHITE } else { t.icon },
+        );
         if resp.has_focus() {
             ui.painter().rect_stroke(r.shrink(2.0), 4.0, egui::Stroke::new(1.5, t.focus), egui::StrokeKind::Inside);
         }

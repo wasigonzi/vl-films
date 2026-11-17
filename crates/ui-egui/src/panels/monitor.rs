@@ -220,7 +220,8 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, which: Which)
     let separate_source_drag = which == Which::Source && stacked_controls && rect.width() < 310.0;
     let source_drag_h = if separate_source_drag { 26.0 } else { 0.0 };
     let cinema = app.ui.fullscreen_program && which == Which::Program;
-    let (controls_h, pad) = if cinema { (0.0, 0.0) } else { (28.0 + 24.0 + 15.0 + transport_size(&ctx) + 8.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h, 4.0) };
+    let (controls_h, pad) =
+        if cinema { (0.0, 0.0) } else { (28.0 + 24.0 + 15.0 + transport_size(&ctx) + 8.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h, 4.0) };
     let video_area = Rect::from_min_max(rect.min + vec2(pad, pad), pos2(rect.max.x - pad, rect.max.y - controls_h));
     // the Source monitor's time ruler starts at `origin` (a subclip restricted to its range)
     let mut origin = Tick::ZERO;
