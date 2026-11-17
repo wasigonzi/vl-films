@@ -220,7 +220,7 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, which: Which)
     let separate_source_drag = which == Which::Source && stacked_controls && rect.width() < 310.0;
     let source_drag_h = if separate_source_drag { 26.0 } else { 0.0 };
     let cinema = app.ui.fullscreen_program && which == Which::Program;
-    let (controls_h, pad) = if cinema { (0.0, 0.0) } else { (28.0 + 24.0 + 15.0 + 36.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h, 4.0) };
+    let (controls_h, pad) = if cinema { (0.0, 0.0) } else { (28.0 + 24.0 + 15.0 + transport_size(&ctx) + 8.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h, 4.0) };
     let video_area = Rect::from_min_max(rect.min + vec2(pad, pad), pos2(rect.max.x - pad, rect.max.y - controls_h));
     // the Source monitor's time ruler starts at `origin` (a subclip restricted to its range)
     let mut origin = Tick::ZERO;
@@ -427,7 +427,7 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, which: Which)
     mini_timeline(app, ui, bar, which, origin, time, duration, rate, mark_in, mark_out);
 
     // ---- transport buttons
-    let row3 = Rect::from_min_size(pos2(rect.min.x, zoom_bar.max.y + 4.0), vec2(rect.width(), 32.0));
+    let row3 = Rect::from_min_size(pos2(rect.min.x, zoom_bar.max.y + 4.0), vec2(rect.width(), transport_size(&ctx) + 4.0));
     transport(app, ui, row3, which);
 }
 
@@ -453,7 +453,7 @@ fn controls_row(
     let stacked_controls = rect.width() < 540.0;
     let separate_source_drag = which == Which::Source && stacked_controls && rect.width() < 310.0;
     let source_drag_h = if separate_source_drag { 26.0 } else { 0.0 };
-    let controls_h = 28.0 + 24.0 + 15.0 + 36.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h;
+    let controls_h = 28.0 + 24.0 + 15.0 + transport_size(&ctx) + 8.0 + if stacked_controls { 26.0 } else { 0.0 } + source_drag_h;
     // ---- controls row: timecode | zoom | res | wrench | duration
     let row1 = Rect::from_min_size(pos2(rect.min.x + 14.0, rect.max.y - controls_h + 2.0), vec2(rect.width() - 28.0, 26.0));
     let tc = format_time(time, rate, drop_frame, time_display, 48000);
@@ -1073,8 +1073,13 @@ fn set_transport_visible(hidden: &mut Vec<String>, command: &str, visible: bool)
     }
 }
 
-/// Width and height of a transport button.
+/// Width and height of a transport button on the desktop.
 const TRANSPORT_BUTTON: f32 = 28.0;
+
+/// Width and height of a transport button: larger on phones and tablets, for fingers.
+fn transport_size(ctx: &egui::Context) -> f32 {
+    if crate::mobile::touch(ctx) { 40.0 } else { TRANSPORT_BUTTON }
+}
 
 /// Draw a monitor's Source or Program transport. Row buttons use `transport_button`; overflow-menu entries call `invoke_transport` directly.
 fn transport(app: &mut FilmcraftApp, ui: &mut egui::Ui, row: Rect, which: Which) {
@@ -1156,17 +1161,18 @@ fn transport(app: &mut FilmcraftApp, ui: &mut egui::Ui, row: Rect, which: Which)
             monitor_view::view_mut(app, which).transport_hidden = edited_hidden;
         }
     }
+    let button = transport_size(ui.ctx());
     let available = (row.width() - 46.0).max(0.0);
-    let widths = vec![TRANSPORT_BUTTON; buttons.len()];
+    let widths = vec![button; buttons.len()];
     // roomy spacing when every button fits with it, tight spacing before any goes to the overflow menu
     let count = buttons.len() as f32;
-    let gap = if count * TRANSPORT_BUTTON + (count - 1.0).max(0.0) * 6.0 <= available { 6.0 } else { 2.0 };
-    let Some(fit) = craft_ui::layout::fit_toolbar(&widths, available, gap, TRANSPORT_BUTTON) else {
+    let gap = if count * button + (count - 1.0).max(0.0) * 6.0 <= available { 6.0 } else { 2.0 };
+    let Some(fit) = craft_ui::layout::fit_toolbar(&widths, available, gap, button) else {
         ui.scope_builder(egui::UiBuilder::new().max_rect(Rect::from_min_max(row.min, pos2((row.right() - 30.0).max(row.left()), row.bottom()))), |ui| {
             egui::ScrollArea::horizontal().id_salt((prefix, "transport-scroll")).show(ui, |ui| {
                 ui.horizontal(|ui| {
                     for (icon, command, label) in &buttons {
-                        let (rect, _) = ui.allocate_exact_size(vec2(TRANSPORT_BUTTON, TRANSPORT_BUTTON), Sense::hover());
+                        let (rect, _) = ui.allocate_exact_size(vec2(button, button), Sense::hover());
                         if transport_button(app, ui, rect, prefix, *icon, command, label) {
                             invoke_transport(app, ui.ctx(), which, command);
                         }
@@ -1176,19 +1182,19 @@ fn transport(app: &mut FilmcraftApp, ui: &mut egui::Ui, row: Rect, which: Which)
         });
         return;
     };
-    let pitch = TRANSPORT_BUTTON + gap;
+    let pitch = button + gap;
     let total = fit.shown.len() as f32 * pitch - gap + if fit.overflow.is_empty() { 0.0 } else { pitch };
-    let mut x = row.center().x - 15.0 - total.max(TRANSPORT_BUTTON) / 2.0;
+    let mut x = row.center().x - 15.0 - total.max(button) / 2.0;
     for (index, _) in &fit.shown {
         let Some((icon, command, label)) = buttons.get(*index) else { continue };
-        let rect = Rect::from_min_size(pos2(x, row.min.y + 2.0), vec2(TRANSPORT_BUTTON, TRANSPORT_BUTTON));
+        let rect = Rect::from_min_size(pos2(x, row.min.y + 2.0), vec2(button, button));
         if transport_button(app, ui, rect, prefix, *icon, command, label) {
             invoke_transport(app, ui.ctx(), which, command);
         }
         x += pitch;
     }
     if !fit.overflow.is_empty() {
-        let rect = Rect::from_min_size(pos2(x, row.min.y + 2.0), vec2(TRANSPORT_BUTTON, TRANSPORT_BUTTON));
+        let rect = Rect::from_min_size(pos2(x, row.min.y + 2.0), vec2(button, button));
         let response = ui.interact(rect, egui::Id::unique((prefix, "transport-more")), Sense::click()).on_hover_text(tl!("More transport controls"));
         response.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Button, true, tl!("More transport controls")));
         if response.hovered() {

@@ -14,8 +14,14 @@ const GAP: f32 = 4.0;
 /// Where the `i`th of `n` buttons goes: in a line along the longer side of `rect`, wrapping onto
 /// further lines as the panel's length needs, the lines centred across it. `None` when the panel
 /// has no room for it.
+#[cfg(test)]
 fn button_pos(rect: Rect, i: usize, n: usize) -> Option<egui::Pos2> {
-    let step = SIZE + GAP;
+    button_pos_sized(rect, i, n, SIZE)
+}
+
+/// [`button_pos`] for buttons `size` points square (touch-sized on phones and tablets).
+fn button_pos_sized(rect: Rect, i: usize, n: usize, size: f32) -> Option<egui::Pos2> {
+    let step = size + GAP;
     let horizontal = rect.width() > rect.height();
     let (along, across) = if horizontal { (rect.width(), rect.height()) } else { (rect.height(), rect.width()) };
     let per_line = (along / step).floor() as usize;
@@ -55,7 +61,23 @@ fn flyout_label(app: &FilmcraftApp, tool: Tool) -> String {
 }
 
 pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
+    show_sized(app, ui, rect, SIZE);
+}
+
+/// The width or height a strip of the tools needs for buttons `size` points square, to fit in
+/// one line `along` points long, or wrapped onto as many lines as that takes.
+pub fn strip_extent(along: f32, size: f32) -> f32 {
+    let step = size + GAP;
+    let per_line = ((along - GAP) / step).floor().max(1.0);
+    let lines = (Tool::groups().len() as f32 / per_line).ceil();
+    lines * step + GAP
+}
+
+/// The Tools panel with buttons `size` points square: [`SIZE`] on the desktop, larger on touch
+/// screens.
+pub fn show_sized(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect, size: f32) {
     let t = app.tokens;
+    let scale = size / SIZE;
     let held_id = egui::Id::unique("tools-held");
     if ui.input(|i| i.pointer.any_pressed()) {
         ui.data_mut(|d| d.remove::<egui::Id>(held_id));
@@ -63,9 +85,9 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
     let groups = Tool::groups();
     let count = groups.len();
     for (i, group) in groups.into_iter().enumerate() {
-        let Some(at) = button_pos(rect, i, count) else { break };
+        let Some(at) = button_pos_sized(rect, i, count, size) else { break };
         let current = if group.contains(&app.ui.tool) { app.ui.tool } else { group[0] };
-        let r = Rect::from_min_size(at, vec2(SIZE, SIZE));
+        let r = Rect::from_min_size(at, vec2(size, size));
         let tip = tooltip(app, current);
         let resp = ui.interact(r, egui::Id::unique(("tool", format!("{:?}", group[0]))), Sense::click_and_drag()).on_hover_text(tip);
         resp.widget_info(|| egui::WidgetInfo::selected(egui::Role::Button, resp.enabled(), app.ui.tool == current, current.label()));
@@ -79,11 +101,11 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
         }
         let active = group.contains(&app.ui.tool);
         if active {
-            ui.painter().rect_filled(Rect::from_center_size(r.center(), vec2(26.0, 26.0)), 4.0, t.accent);
+            ui.painter().rect_filled(Rect::from_center_size(r.center(), vec2(26.0, 26.0) * scale), 4.0, t.accent);
         } else if resp.hovered() {
             ui.painter().rect_filled(r, 4.0, t.hover);
         }
-        icons::paint(ui.painter(), Rect::from_center_size(r.center(), vec2(17.0, 17.0)), current.icon(), if active { egui::Color32::WHITE } else { t.icon });
+        icons::paint(ui.painter(), Rect::from_center_size(r.center(), vec2(17.0, 17.0) * scale.sqrt()), current.icon(), if active { egui::Color32::WHITE } else { t.icon });
         if resp.has_focus() {
             ui.painter().rect_stroke(r.shrink(2.0), 4.0, egui::Stroke::new(1.5, t.focus), egui::StrokeKind::Inside);
         }

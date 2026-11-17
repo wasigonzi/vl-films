@@ -23,7 +23,7 @@ pub fn area_id() -> egui::Id {
 }
 
 /// Where each panel body was drawn last frame, and on which layer.
-fn bodies_id() -> egui::Id {
+pub(crate) fn bodies_id() -> egui::Id {
     area_id().with("bodies")
 }
 
