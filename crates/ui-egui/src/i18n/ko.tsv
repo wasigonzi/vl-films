@@ -71,7 +71,6 @@
 	AAC Audio 48 kHz 320 kbps	AAC 오디오 48 kHz 320 kbps
 	AAF Export Settings	AAF 내보내기 설정
 	AAF…	AAF…
-	About	정보
 	About VL Films	VL Films 정보
 	Accent Color	강조 색상
 	Accessible color contrast	접근성 색상 대비
@@ -701,7 +700,6 @@
 	Continuous	연속
 	Continuous Bezier	연속 베지어
 	Contrast	대비
-	Contributors	기여자
 	Conversion Type	변환 유형
 	Convert to Master Clip	마스터 클립으로 변환
 	Convolution Reverb	컨볼루션 리버브
@@ -1904,7 +1902,6 @@
 	Mixer	믹서
 	Mode	모드
 	Model	모델
-	Models	모델
 	Modern High Gain	모던 하이 게인
 	Modifier held / selected	보조키 누름/선택됨
 	Modifiers	보조키

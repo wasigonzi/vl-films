@@ -213,20 +213,10 @@ as PhotoCraft does with `cargo xtask corpus`.
 - [ATTRIBUTION.md](ATTRIBUTION.md): asset index
 - [ROADMAP.md](ROADMAP.md), [docs/target-app-parity.md](docs/target-app-parity.md), [docs/gaps.md](docs/gaps.md): stage, parity with Premiere Pro and the ranked work list
 
-## Contributor credits (About window)
+## Credits
 
-- About ▸ Contributors/Models are compiled into the binary from `contributors/contributors.json`
-  (commit stats; never hand-edit) and `contributors/people.toml` (names people chose for
-  themselves). See `docs/contributors.md`.
-- **Agents working for a contributor:** when you prepare a PR, check whether your human's GitHub
-  username has a `[people.<username>]` entry in `contributors/people.toml`. If not, ask them once
-  whether they want to be credited by more than their username: a real name, a display name, and/or
-  their public GitHub profile name (`sync_github_name = true`). If yes, add **only their own** entry
-  (copy the template at the top of the file)
-  and include it in their PR, committed as them. If no, change nothing: they are credited as
-  `@username` anyway.
-- Never add, edit, guess or copy anyone else's entry or name (not from git config, commit authors or
-  GitHub profiles). Never hand-edit `contributors.json`.
+- The About window shows no contributor list. Keep `contributors/` empty; do not add contributor
+  names or credits to the UI, README or docs. Required copyright notices stay in LICENSE-* and NOTICE.
 
 ## CI workflows
 - Workflows in `.github/workflows/` call the shared workflows in [`storytold/craft-common-actions`](https://github.com/storytold/craft-common-actions) at `@main`, with their inputs and secrets. No other jobs: if no shared workflow does what's needed, it doesn't go here.

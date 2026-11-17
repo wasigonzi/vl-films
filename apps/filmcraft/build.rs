@@ -22,7 +22,7 @@ mod windows {
         res.set_icon("../../assets/app-icon/filmcraft.ico")
             .set("ProductName", "VL Films")
             .set("FileDescription", "VL Films video editor")
-            .set("LegalCopyright", "Copyright (c) the VL Films contributors. MIT OR Apache-2.0.")
+            .set("LegalCopyright", "VL Films by Visualab Studios. MIT OR Apache-2.0.")
             .set("OriginalFilename", "filmcraft.exe")
             .set("InternalName", "filmcraft");
         if let Err(e) = res.compile() {
