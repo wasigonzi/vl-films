@@ -89,9 +89,57 @@
     addEventListener("error", (ev) => { if (window.filmcraftLoad.readyMs && isFatal(ev.error || ev.message)) window.filmcraftFatal(ev.error || ev.message); });
     addEventListener("unhandledrejection", (ev) => { if (window.filmcraftLoad.readyMs && isFatal(ev.reason)) window.filmcraftFatal(ev.reason); });
   </script>
+  <script>
+    // Visualab Studios account gate: only signed-in users open VL Films. The website hands the
+    // Supabase session over in the URL fragment (#access_token=…&refresh_token=…) when it opens the
+    // app; the session is kept in this origin's storage and refreshed when it expires. Without a
+    // valid session the page goes back to VL Films' page on the website to sign in.
+    // `__VL_SUPABASE_URL__` / `__VL_SUPABASE_ANON__` are filled in at deploy time; unfilled (local
+    // builds) the gate is off.
+    window.vlGate = (async () => {
+      const SB = "__VL_SUPABASE_URL__", KEY = "__VL_SUPABASE_ANON__";
+      const SITE = "https://www.visualabstudios.com/vl-tools/vl-films";
+      const STORE = "vl-films-session";
+      if (SB.startsWith("__") || KEY.startsWith("__")) return true;
+      const say = (t) => { const s = document.getElementById("status"); if (s) s.textContent = t; };
+      const leave = () => { say("Inicia sesión en Visualab Studios para usar VL Films…"); location.replace(SITE + "?acceso=1"); return new Promise(() => {}); };
+      const h = new URLSearchParams(location.hash.slice(1));
+      if (h.get("access_token")) {
+        localStorage.setItem(STORE, JSON.stringify({ access_token: h.get("access_token"), refresh_token: h.get("refresh_token") || "" }));
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+      let sess = null;
+      try { sess = JSON.parse(localStorage.getItem(STORE) || "null"); } catch (e) { sess = null; }
+      if (!sess || !sess.access_token) return leave();
+      say("Verificando tu cuenta…");
+      const user = (t) => fetch(SB + "/auth/v1/user", { headers: { apikey: KEY, Authorization: "Bearer " + t } });
+      try {
+        let r = await user(sess.access_token);
+        if (r.status === 401 || r.status === 403) {
+          if (!sess.refresh_token) { localStorage.removeItem(STORE); return leave(); }
+          const t = await fetch(SB + "/auth/v1/token?grant_type=refresh_token", {
+            method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: sess.refresh_token }),
+          });
+          if (!t.ok) { localStorage.removeItem(STORE); return leave(); }
+          const j = await t.json();
+          sess = { access_token: j.access_token, refresh_token: j.refresh_token };
+          localStorage.setItem(STORE, JSON.stringify(sess));
+          r = await user(sess.access_token);
+        }
+        if (!r.ok) { localStorage.removeItem(STORE); return leave(); }
+      } catch (e) {
+        // offline: an earlier verified session may still open the app from the cache
+        if (!navigator.onLine) return true;
+        return leave();
+      }
+      say("Cargando VL Films…");
+      return true;
+    })();
+  </script>
   <script type="module">
     // `__FC_BUILD__` is replaced by `cargo xtask web` with a hash of the build: the glue and the
     // wasm are cached as immutable, so their URLs must change with every build.
+    await window.vlGate;
     const build = "__FC_BUILD__";
     const v = build.startsWith("__") ? "" : "?v=" + build;
     const t0 = performance.now();
